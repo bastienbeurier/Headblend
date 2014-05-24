@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="MainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="LzV-33-4sA" kind="modal" identifier="Share Modal Segue" id="nRS-iT-rES"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="157" y="-8"/>
+        </scene>
+        <!--Display View Controller-->
+        <scene sceneID="rhh-7p-f8L">
+            <objects>
+                <viewController id="LzV-33-4sA" customClass="DisplayViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="71N-6g-W3t"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Eo-So-GDG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Yl7-ZK-pds">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="diK-SP-yFv">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="408"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="95h-y3-bFI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="408"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CBn-GB-BT6">
+                                <rect key="frame" x="0.0" y="408" width="160" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="DaT-v0-NYX"/>
+                                    <constraint firstAttribute="width" constant="160" id="EIj-De-vof"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cwo-X4-Gwn">
+                                <rect key="frame" x="160" y="408" width="160" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="Sqn-nG-PA8"/>
+                                    <constraint firstAttribute="height" constant="160" id="VQe-2n-8nu"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZE-pk-E1K">
+                                <rect key="frame" x="270" y="10" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="camera-validate.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="validateButtonClicked:" destination="LzV-33-4sA" eventType="touchUpInside" id="1wp-zg-qKj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2K-Yg-IuV">
+                                <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="camera-back.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonClicked:" destination="LzV-33-4sA" eventType="touchUpInside" id="MkL-PV-DHg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qki-LZ-QGM">
+                                <rect key="frame" x="110" y="358" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="4fn-tX-grL"/>
+                                    <constraint firstAttribute="width" constant="100" id="yhv-Lb-z2n"/>
+                                </constraints>
+                                <state key="normal" image="preview-blend1.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="blendButtonClicked:" destination="LzV-33-4sA" eventType="touchUpInside" id="W9b-jb-v0o"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="diK-SP-yFv" secondAttribute="trailing" id="6MC-5c-kvj"/>
+                            <constraint firstItem="cwo-X4-Gwn" firstAttribute="top" secondItem="diK-SP-yFv" secondAttribute="bottom" id="9Cb-I6-9bt"/>
+                            <constraint firstItem="CBn-GB-BT6" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" id="Icp-QU-da9"/>
+                            <constraint firstItem="cwo-X4-Gwn" firstAttribute="top" secondItem="95h-y3-bFI" secondAttribute="bottom" id="KPp-GQ-68r"/>
+                            <constraint firstItem="9Eo-So-GDG" firstAttribute="top" secondItem="Qki-LZ-QGM" secondAttribute="bottom" constant="110" id="Reh-rl-MYV"/>
+                            <constraint firstItem="diK-SP-yFv" firstAttribute="top" secondItem="Yl7-ZK-pds" secondAttribute="top" id="U1B-cK-FKQ"/>
+                            <constraint firstItem="Qki-LZ-QGM" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" constant="110" id="XZd-1C-baO"/>
+                            <constraint firstItem="9Eo-So-GDG" firstAttribute="top" secondItem="CBn-GB-BT6" secondAttribute="bottom" id="Zzu-eQ-nBb"/>
+                            <constraint firstItem="95h-y3-bFI" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" id="byj-88-2Gw"/>
+                            <constraint firstAttribute="trailing" secondItem="95h-y3-bFI" secondAttribute="trailing" id="dQ1-xR-wnV"/>
+                            <constraint firstItem="95h-y3-bFI" firstAttribute="top" secondItem="Yl7-ZK-pds" secondAttribute="top" id="hLW-Sc-7RZ"/>
+                            <constraint firstItem="9Eo-So-GDG" firstAttribute="top" secondItem="cwo-X4-Gwn" secondAttribute="bottom" id="j89-xT-ffK"/>
+                            <constraint firstAttribute="trailing" secondItem="cwo-X4-Gwn" secondAttribute="trailing" id="jz9-U2-s29"/>
+                            <constraint firstItem="diK-SP-yFv" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" id="w9N-Mk-zF9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="K2K-Yg-IuV" id="skm-6r-6kR"/>
+                        <outlet property="bottomImageView" destination="95h-y3-bFI" id="bbd-en-DeH"/>
+                        <outlet property="firstPersonImageView" destination="CBn-GB-BT6" id="Cs2-Iq-5OB"/>
+                        <outlet property="secondPersonImageView" destination="cwo-X4-Gwn" id="SXt-jw-5cV"/>
+                        <outlet property="topImageView" destination="diK-SP-yFv" id="d12-Rt-cxZ"/>
+                        <outlet property="validateButton" destination="UZE-pk-E1K" id="6Rc-MM-95m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifU-u3-SHJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="666" y="-8"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="camera-back.png" width="100" height="100"/>
+        <image name="camera-validate.png" width="100" height="100"/>
+        <image name="preview-blend1.png" width="100" height="100"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
