@@ -12,9 +12,9 @@
 
 + (void)outerGlow:(UIView *)view;
 
-+ (void)hideBottomHalf:(UIView *)view;
++ (void)hideBottomHalf:(UIView *)view  offset:(NSInteger)offset;
 
-+ (void)hideTopHalf:(UIView *)view;
++ (void)hideTopHalf:(UIView *)view  offset:(NSInteger)offset;
 
 + (UIImage*)cropImage:(UIImage*)image toFitWidthOnHeightTargetRatio:(CGFloat)targetRatio andOrientate:(UIImageOrientation)orientation;
 

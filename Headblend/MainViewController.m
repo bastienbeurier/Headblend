@@ -80,15 +80,14 @@
     
     self.backButton.hidden = YES;
     self.captureButton.hidden = NO;
-    self.faceTemplate.hidden = NO;
     self.firstToast.hidden = YES;
     self.secondToast.hidden = YES;
     
     self.topImageView.image = nil;
     self.bottomImageView.image = nil;
     
-    [ImageUtilities hideBottomHalf:self.topImageView];
-    [ImageUtilities hideTopHalf:self.bottomImageView];
+    [ImageUtilities hideBottomHalf:self.topImageView offset:0];
+    [ImageUtilities hideTopHalf:self.bottomImageView offset:0];
     
     self.bottomImageView.backgroundColor = [UIColor blackColor];
     
@@ -103,13 +102,12 @@
     
     self.backButton.hidden = NO;
     self.captureButton.hidden = NO;
-    self.faceTemplate.hidden = YES;
     self.firstToast.hidden = YES;
     self.secondToast.hidden = YES;
     
     self.bottomImageView.image = nil;
-    [ImageUtilities hideBottomHalf:self.topImageView];
-    [ImageUtilities hideTopHalf:self.bottomImageView];
+    [ImageUtilities hideBottomHalf:self.topImageView offset:0];
+    [ImageUtilities hideTopHalf:self.bottomImageView offset:0];
     
     self.bottomImageView.backgroundColor = [UIColor clearColor];
     

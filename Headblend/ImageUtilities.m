@@ -19,11 +19,11 @@
     view.layer.masksToBounds = NO;
 }
 
-+ (void)hideBottomHalf:(UIView *)view
++ (void)hideBottomHalf:(UIView *)view offset:(NSInteger)offset
 {
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.backgroundColor = [[UIColor clearColor] CGColor];
-    CGRect maskRect = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height / 2);
+    CGRect maskRect = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height / 2 + offset);
     
     // Create a path with the rectangle in it.
     CGPathRef path = CGPathCreateWithRect(maskRect, NULL);
@@ -36,11 +36,11 @@
     view.layer.mask = maskLayer;
 }
 
-+ (void)hideTopHalf:(UIView *)view
++ (void)hideTopHalf:(UIView *)view offset:(NSInteger)offset
 {
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.backgroundColor = [[UIColor clearColor] CGColor];
-    CGRect maskRect = CGRectMake(0, view.bounds.size.height / 2, view.bounds.size.width, view.bounds.size.height / 2);
+    CGRect maskRect = CGRectMake(0, view.bounds.size.height / 2 + offset, view.bounds.size.width, view.bounds.size.height / 2 + offset);
     
     // Create a path with the rectangle in it.
     CGPathRef path = CGPathCreateWithRect(maskRect, NULL);
