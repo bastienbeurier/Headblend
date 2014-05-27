@@ -8,6 +8,7 @@
 
 #import "ApiUtilities.h"
 #import "Constants.h"
+#import "Blend.h"
 
 @implementation ApiUtilities
 
@@ -50,17 +51,40 @@
 }
 
 // Snapby creation
-+ (void)saveEncodedImage:(NSString *)encodedImage
++ (void)saveEncodedBlend1:(NSString *)blend1 andBlend2:(NSString *)blend2
 {    
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:10];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
     ApiUtilities *manager = [ApiUtilities sharedClient];
     
-    [parameters setObject:encodedImage forKey:@"headblend"];
+    [parameters setObject:blend1 forKey:@"blend1"];
+    [parameters setObject:blend2 forKey:@"blend2"];
     
-    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"headblend.json"];
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"blends.json"];
     
     [manager POST:path parameters:parameters success:nil failure:nil];
+}
+
++ (void)pullBlendsPage:(NSUInteger)page pageSize:(NSUInteger)pageSize
+               AndExecuteSuccess:(void(^)(NSArray *snapbies, NSInteger page))successBlock failure:(void (^)())failureBlock
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:[NSNumber numberWithLong:page] forKey:@"page"];
+    [parameters setObject:[NSNumber numberWithLong:pageSize] forKey:@"page_size"];
+    
+    NSString *path = [[ApiUtilities getBasePath] stringByAppendingString:@"blends"];
+    
+    [[ApiUtilities sharedClient] GET:path parameters:parameters success:^(NSURLSessionDataTask *task, id JSON) {
+        NSDictionary *result = [JSON valueForKeyPath:@"result"];
+        NSArray *rawBlends = [result valueForKeyPath:@"blends"];
+        NSInteger page = [[result valueForKeyPath:@"page"] integerValue];
+        successBlock([Blend rawBlendsToInstances:rawBlends], page);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failureBlock) {
+            failureBlock();
+        }
+    }];
 }
 
 @end

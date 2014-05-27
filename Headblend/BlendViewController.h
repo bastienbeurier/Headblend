@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Blend.h"
 
 @interface BlendViewController : UIViewController
+
+- (id)initWithBlend:(Blend *)blend;
 
 @end

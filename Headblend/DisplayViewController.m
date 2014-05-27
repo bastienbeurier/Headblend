@@ -33,6 +33,13 @@
 @property (strong, nonatomic) GPUImageGrayscaleFilter *grayFilter;
 @property (strong, nonatomic) GPUImageVignetteFilter *vignetteFilter;
 
+@property (weak, nonatomic) IBOutlet UIButton *filterButton;
+@property (weak, nonatomic) IBOutlet UIButton *exposureFirstButton;
+@property (weak, nonatomic) IBOutlet UIButton *exposureSecondButton;
+@property (weak, nonatomic) IBOutlet UIImageView *inverseButton;
+
+
+
 @property (nonatomic) float exposureLevel;
 @property (nonatomic) NSUInteger filterIndex;
 
@@ -74,8 +81,14 @@
     [self centerScrollView:self.bottomScrollView];
     
     [self firstBlend];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-//    [self startTimer];
+    self.topImageView.bounds = CGRectMake(0, 0, self.topScrollView.bounds.size.width, self.topScrollView.bounds.size.height);
+    self.bottomImageView.bounds = CGRectMake(0, 0, self.bottomImageView.bounds.size.width, self.bottomImageView.bounds.size.height);
 }
 
 - (void)centerScrollView:(UIScrollView *)scrollView
@@ -91,7 +104,7 @@
 {
     self.blendIndex = 0;
     
-    self.logoImage.image = [UIImage imageNamed:@"preview-blend1"];
+    self.logoImage.image = [UIImage imageNamed:@"display-blend2"];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.topImageView.bounds;
@@ -112,7 +125,7 @@
 {
     self.blendIndex = 1;
     
-    self.logoImage.image = [UIImage imageNamed:@"preview-blend2"];
+    self.logoImage.image = [UIImage imageNamed:@"display-blend1"];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.topImageView.bounds;
@@ -136,30 +149,47 @@
 - (IBAction)validateButtonClicked:(id)sender {
     self.backButton.hidden = YES;
     self.validateButton.hidden = YES;
+    self.filterButton.hidden = YES;
+    self.exposureFirstButton.hidden = YES;
+    self.exposureSecondButton.hidden = YES;
+    self.inverseButton.hidden = YES;
     
     UIGraphicsBeginImageContext(self.view.bounds.size);
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *image1 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    [ApiUtilities saveEncodedImage:[ImageUtilities encodeToBase64String:image]];
+    [self screenTaped:nil];
+    
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image2 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self screenTaped:nil];
+    
+    [ApiUtilities saveEncodedBlend1:[ImageUtilities encodeToBase64String:image1] andBlend2:[ImageUtilities encodeToBase64String:image2]];
     
     //TODO: change app name
-    NSString *shareString = @"Download Headblend for iPhone.";
+    NSString *shareString = @"";
     
     //TODO: add App Store link
-    NSURL *shareUrl = [NSURL URLWithString:@"http://itunes.com/apps/headblend"];
+    NSURL *shareUrl = [NSURL URLWithString:@""];
     
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, image, nil];
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, image1, image2, nil];
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-    [activityViewController setValue:@"Sharing a blend with you!" forKey:@"subject"];
+    [activityViewController setValue:@"" forKey:@"subject"];
     activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
     
     [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         self.backButton.hidden = NO;
         self.validateButton.hidden = NO;
+        self.filterButton.hidden = NO;
+        self.exposureFirstButton.hidden = NO;
+        self.exposureSecondButton.hidden = NO;
+        self.inverseButton.hidden = NO;
     }];
     
     [self presentViewController:activityViewController animated:YES completion:nil];
@@ -171,17 +201,6 @@
     } else {
         [self firstBlend];
     }
-}
-
-- (void)startTimer
-{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                  target:self
-                                                selector:@selector(toggleBlend)
-                                                userInfo:nil
-                                                 repeats:YES];
-    
-    [self.timer fire];
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale

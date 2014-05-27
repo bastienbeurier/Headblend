@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>46D3194E-C3B9-42C9-B006-AA0931811725</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Headblend</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</key>
+		<string>ssh://github.com/bastienbeurier/Headblend.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Headblend.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/bastienbeurier/Headblend.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Headblend</string>
+		</dict>
+	</array>
+</dict>
+</plist>

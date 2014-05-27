@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Headblend. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "CameraViewController.h"
 #import "ImageUtilities.h"
 #import "Constants.h"
 #import "DisplayViewController.h"
 
-@interface MainViewController ()
+@interface CameraViewController ()
 
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
 @property (nonatomic) NSUInteger pictureIndex;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation MainViewController {
+@implementation CameraViewController {
     BOOL isOpening;
 }
 - (void)viewDidLoad

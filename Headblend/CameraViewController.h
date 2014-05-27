@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DisplayViewController.h"
 
-@interface MainViewController : UIViewController <UIImagePickerControllerDelegate, DisplayControllerDelegate>
+@interface CameraViewController : UIViewController <UIImagePickerControllerDelegate, DisplayControllerDelegate>
 
 @property (nonatomic) UIImagePickerControllerSourceType sourceType;
 @property (nonatomic) BOOL backFromDisplay;

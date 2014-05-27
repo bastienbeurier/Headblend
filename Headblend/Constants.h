@@ -17,4 +17,5 @@
 static const NSUInteger kCameraHeight = 426;
 static const NSUInteger kScreenWidth = 320;
 static NSString * const kApiVersion = @"1";
-static NSString * const kProdAFSnapbyAPIBaseURLString = @"http://snapby-web.herokuapp.com/";
+static NSString * const kProdAFSnapbyAPIBaseURLString = @"http://jokeface.herokuapp.com/";
+static NSString *const kProdBlendBaseURL = @"http://s3.amazonaws.com/jokeface_production/original/";

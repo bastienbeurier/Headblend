@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IndexViewController : UIViewController
+@interface IndexViewController : UIViewController <UIScrollViewDelegate>
+
+- (void)refreshBlends;
 
 @end
