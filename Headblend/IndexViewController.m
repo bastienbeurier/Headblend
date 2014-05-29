@@ -11,6 +11,8 @@
 #import "IndexViewController.h"
 #import "ApiUtilities.h"
 #import "BlendViewController.h"
+#import "ImageUtilities.h"
+#import "CameraViewController.h"
 
 @interface IndexViewController ()
 
@@ -24,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UIView *indicationView;
+
 
 @end
 
@@ -43,6 +47,11 @@
     self.page = 1;
     self.noMoreBlendToPull = NO;
     self.pullingMoreBlends = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self refreshBlends];
 }
@@ -116,6 +125,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSUInteger page = [self getScrollViewPage];
+    
+    if (page > 0) {
+        self.indicationView.hidden = YES;
+    }
     
     //Skip if method already called for this page or if scrolling automatically (when user clicks on marker)
     if (page == self.lastPageScrolled) {
@@ -270,7 +283,7 @@
     self.viewControllers = controllers;
     
     if (self.noMoreBlendToPull) {
-        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * (numberPages + 1));
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * (numberPages));
     } else {
         self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * numberPages);
     }
@@ -282,6 +295,10 @@
 
 - (IBAction)refreshButtonClicked:(id)sender {
     [self refreshBlends];
+}
+
+- (IBAction)cameraButtonClicked:(id)sender {
+    [self performSegueWithIdentifier:@"Camera Modal Segue" sender:nil];
 }
 
 @end

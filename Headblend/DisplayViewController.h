@@ -10,7 +10,7 @@
 
 @protocol DisplayControllerDelegate;
 
-@interface DisplayViewController : UIViewController <UIScrollViewDelegate>
+@interface DisplayViewController : UIViewController <UIScrollViewDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImage *firstPersonImage;
 @property (weak, nonatomic) IBOutlet UIImage *secondPersonImage;

@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *faceTemplate;
 @property (weak, nonatomic) IBOutlet UIView *firstToast;
 @property (weak, nonatomic) IBOutlet UIView *secondToast;
+@property (weak, nonatomic) IBOutlet UIButton *quitButton;
 
 @end
 
@@ -82,6 +83,7 @@
     self.captureButton.hidden = NO;
     self.firstToast.hidden = YES;
     self.secondToast.hidden = YES;
+    self.quitButton.hidden = NO;
     
     self.topImageView.image = nil;
     self.bottomImageView.image = nil;
@@ -104,6 +106,7 @@
     self.captureButton.hidden = NO;
     self.firstToast.hidden = YES;
     self.secondToast.hidden = YES;
+    self.quitButton.hidden = YES;
     
     self.bottomImageView.image = nil;
     [ImageUtilities hideBottomHalf:self.topImageView offset:0];
@@ -158,22 +161,26 @@
         
         imagePickerController.cameraOverlayView = myView;
         
-        // Transform camera to get full screen
-        double translationFactor = (self.view.frame.size.height - kCameraHeight) / 2;
-        CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, translationFactor);
-        imagePickerController.cameraViewTransform = translate;
+        // Transform camera to get full screen (for iphone 5)
+        // ugly code
+        if (self.view.frame.size.height == 568) {
+            double translationFactor = (self.view.frame.size.height - kCameraHeight) / 2;
+            CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, translationFactor);
+            imagePickerController.cameraViewTransform = translate;
+            
+            double rescalingRatio = self.view.frame.size.height / kCameraHeight;
+            CGAffineTransform scale = CGAffineTransformScale(translate, rescalingRatio, rescalingRatio);
+            imagePickerController.cameraViewTransform = scale;
+        }
         
-        double rescalingRatio = self.view.frame.size.height / kCameraHeight;
-        CGAffineTransform scale = CGAffineTransformScale(translate, rescalingRatio, rescalingRatio);
-        imagePickerController.cameraViewTransform = scale;
-        
-        // flash disactivated (selfie)
         imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
     } else {
         imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
     
     self.imagePickerController = imagePickerController;
+    
+    self.imagePickerController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 // Display the relevant part of the photo once taken
@@ -243,7 +250,14 @@
 
 - (void)presentCameraController
 {
+    
     [self presentViewController:self.imagePickerController animated:NO completion:NULL];
+}
+
+- (IBAction)quitButtonClicked:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
 }
 
 @end

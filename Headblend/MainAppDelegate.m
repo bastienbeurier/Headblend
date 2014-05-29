@@ -7,6 +7,7 @@
 //
 
 #import "MainAppDelegate.h"
+#import "IndexViewController.h"
 
 @implementation MainAppDelegate
 
@@ -30,7 +31,11 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    UIViewController *currentController = self.window.rootViewController;
+    
+    if ([currentController isKindOfClass:[IndexViewController class]]) {
+        [((IndexViewController *)currentController) refreshBlends];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

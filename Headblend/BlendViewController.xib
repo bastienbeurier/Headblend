@@ -10,7 +10,7 @@
                 <outlet property="imageView" destination="Cl2-Jc-4P6" id="3aN-wp-qhW"/>
                 <outlet property="inverseButton" destination="521-rz-UTd" id="Qay-V7-I1H"/>
                 <outlet property="refreshButton" destination="ObK-dy-6g0" id="iGW-Ww-y5l"/>
-                <outlet property="secondImageView" destination="Cl2-Jc-4P6" id="ba8-yb-JC4"/>
+                <outlet property="secondImageView" destination="NP7-JF-tdp" id="jcZ-H4-sbS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="fIq-3E-m0H"/>
             </connections>
         </placeholder>
@@ -19,11 +19,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NP7-JF-tdp">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NP7-JF-tdp">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cl2-Jc-4P6">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cl2-Jc-4P6">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>

@@ -21,7 +21,6 @@
 @property (nonatomic) BOOL blendIndex;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *validateButton;
-@property (weak, nonatomic) IBOutlet UIImageView *logoImage;
 @property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) IBOutlet UIScrollView *topScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *bottomScrollView;
@@ -36,8 +35,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *filterButton;
 @property (weak, nonatomic) IBOutlet UIButton *exposureFirstButton;
 @property (weak, nonatomic) IBOutlet UIButton *exposureSecondButton;
-@property (weak, nonatomic) IBOutlet UIImageView *inverseButton;
+@property (weak, nonatomic) IBOutlet UIButton *inverseButton;
 
+@property (strong, nonatomic) UIActionSheet *actionSheet;
+
+@property (weak, nonatomic) IBOutlet UIView *tutorialView;
 
 
 @property (nonatomic) float exposureLevel;
@@ -80,6 +82,16 @@
     [self centerScrollView:self.topScrollView];
     [self centerScrollView:self.bottomScrollView];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![userDefaults objectForKey:@"ADJUST FACE TUTO PREF"]) {
+        self.tutorialView.hidden = NO;
+    } else {
+        self.tutorialView.hidden = YES;
+    }
+    
+    [userDefaults setObject:@"dummy" forKey:@"ADJUST FACE TUTO PREF"];
+    
     [self firstBlend];
 }
 
@@ -104,8 +116,6 @@
 {
     self.blendIndex = 0;
     
-    self.logoImage.image = [UIImage imageNamed:@"display-blend2"];
-    
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.topImageView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], nil];
@@ -124,8 +134,6 @@
 - (void)secondBlend
 {
     self.blendIndex = 1;
-    
-    self.logoImage.image = [UIImage imageNamed:@"display-blend1"];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.topImageView.bounds;
@@ -147,55 +155,15 @@
 }
 
 - (IBAction)validateButtonClicked:(id)sender {
-    self.backButton.hidden = YES;
-    self.validateButton.hidden = YES;
-    self.filterButton.hidden = YES;
-    self.exposureFirstButton.hidden = YES;
-    self.exposureSecondButton.hidden = YES;
-    self.inverseButton.hidden = YES;
-    
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image1 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [self screenTaped:nil];
-    
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image2 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [self screenTaped:nil];
-    
-    [ApiUtilities saveEncodedBlend1:[ImageUtilities encodeToBase64String:image1] andBlend2:[ImageUtilities encodeToBase64String:image2]];
-    
-    //TODO: change app name
-    NSString *shareString = @"";
-    
-    //TODO: add App Store link
-    NSURL *shareUrl = [NSURL URLWithString:@""];
-    
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, image1, image2, nil];
-    
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-    [activityViewController setValue:@"" forKey:@"subject"];
-    activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
-    
-    [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-        self.backButton.hidden = NO;
-        self.validateButton.hidden = NO;
-        self.filterButton.hidden = NO;
-        self.exposureFirstButton.hidden = NO;
-        self.exposureSecondButton.hidden = NO;
-        self.inverseButton.hidden = NO;
-    }];
-    
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:@"Publish", @"Share or save", nil];
+    [self.actionSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
-- (IBAction)screenTaped:(id)sender {
+- (IBAction)inverseButtonClicked:(id)sender {
     if (self.blendIndex == 0) {
         [self secondBlend];
     } else {
@@ -318,4 +286,64 @@
     return [self.grayFilter imageByFilteringImage:image];
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:@"Cancel"]) {
+        return;
+    }
+    
+    self.backButton.hidden = YES;
+    self.validateButton.hidden = YES;
+    self.filterButton.hidden = YES;
+    self.exposureFirstButton.hidden = YES;
+    self.exposureSecondButton.hidden = YES;
+    self.inverseButton.hidden = YES;
+    
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image1 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self inverseButtonClicked:nil];
+    
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image2 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self inverseButtonClicked:nil];
+    
+    self.backButton.hidden = NO;
+    self.validateButton.hidden = NO;
+    self.filterButton.hidden = NO;
+    self.exposureFirstButton.hidden = NO;
+    self.exposureSecondButton.hidden = NO;
+    self.inverseButton.hidden = NO;
+    
+    if ([buttonTitle isEqualToString:@"Publish"]) {
+        
+        [ApiUtilities saveEncodedBlend1:[ImageUtilities encodeToBase64String:image1] andBlend2:[ImageUtilities encodeToBase64String:image2]];
+    } else {
+        //TODO: change app name
+        NSString *shareString = @"";
+        
+        //TODO: add App Store link
+        NSURL *shareUrl = [NSURL URLWithString:@""];
+        
+        NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, image1, image2, nil];
+        
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+        [activityViewController setValue:@"" forKey:@"subject"];
+        activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop];
+        
+        [self presentViewController:activityViewController animated:YES completion:nil];
+    }
+    
+}
+- (IBAction)tutorialViewClicked:(id)sender {
+    self.tutorialView.hidden = YES;
+}
 @end
