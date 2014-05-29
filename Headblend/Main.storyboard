@@ -1,107 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="9Su-5Y-sA1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Index View Controller-->
-        <scene sceneID="ZDc-ct-Zx2">
-            <objects>
-                <viewController id="9Su-5Y-sA1" customClass="IndexViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Gas-GX-H5Q"/>
-                        <viewControllerLayoutGuide type="bottom" id="PhH-7b-hrO"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="O3a-hX-fgX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLA-x4-Syz">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </scrollView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vAi-EP-ibK">
-                                <rect key="frame" x="0.0" y="224" width="320" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QcA-W0-g61">
-                                <rect key="frame" x="130" y="254" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="DMz-Kx-PJ6"/>
-                                    <constraint firstAttribute="height" constant="60" id="FPx-HY-wFg"/>
-                                </constraints>
-                                <state key="normal" image="explore_refresh.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="refreshButtonClicked:" destination="9Su-5Y-sA1" eventType="touchUpInside" id="fnd-aB-OJf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xwb-K9-neL">
-                                <rect key="frame" x="270" y="30" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="y2m-kr-xOR"/>
-                                    <constraint firstAttribute="height" constant="40" id="y6T-TA-Wok"/>
-                                </constraints>
-                                <state key="normal" image="explore_camera2.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cameraButtonClicked:" destination="9Su-5Y-sA1" eventType="touchUpInside" id="rNi-QZ-lEw"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLS-be-BMj">
-                                <rect key="frame" x="0.0" y="548" width="320" height="20"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="index-down-arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="HAM-2g-OnW">
-                                        <rect key="frame" x="0.0" y="5" width="320" height="10"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="BeE-IW-OtQ"/>
-                                    <constraint firstItem="HAM-2g-OnW" firstAttribute="top" secondItem="kLS-be-BMj" secondAttribute="top" constant="5" id="LQM-TB-h2g"/>
-                                    <constraint firstAttribute="trailing" secondItem="HAM-2g-OnW" secondAttribute="trailing" id="Odd-9U-Ylq"/>
-                                    <constraint firstItem="HAM-2g-OnW" firstAttribute="leading" secondItem="kLS-be-BMj" secondAttribute="leading" id="RPy-DZ-Ycx"/>
-                                    <constraint firstAttribute="bottom" secondItem="HAM-2g-OnW" secondAttribute="bottom" constant="5" id="s9w-Nz-SJn"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="FLA-x4-Syz" secondAttribute="trailing" id="6GU-8F-XfG"/>
-                            <constraint firstAttribute="trailing" secondItem="kLS-be-BMj" secondAttribute="trailing" id="7kP-cJ-e4O"/>
-                            <constraint firstItem="PhH-7b-hrO" firstAttribute="top" secondItem="kLS-be-BMj" secondAttribute="bottom" id="P2y-fQ-tPN"/>
-                            <constraint firstAttribute="trailing" secondItem="Xwb-K9-neL" secondAttribute="trailing" constant="10" id="TJK-az-iF0"/>
-                            <constraint firstItem="Xwb-K9-neL" firstAttribute="top" secondItem="Gas-GX-H5Q" secondAttribute="bottom" constant="10" id="Z4E-0E-iJL"/>
-                            <constraint firstAttribute="centerY" secondItem="QcA-W0-g61" secondAttribute="centerY" id="dew-ri-CrO"/>
-                            <constraint firstAttribute="centerX" secondItem="QcA-W0-g61" secondAttribute="centerX" id="eGe-rU-uRC"/>
-                            <constraint firstItem="FLA-x4-Syz" firstAttribute="leading" secondItem="O3a-hX-fgX" secondAttribute="leading" id="ffo-XZ-jo3"/>
-                            <constraint firstItem="PhH-7b-hrO" firstAttribute="top" secondItem="FLA-x4-Syz" secondAttribute="bottom" id="jkg-2O-xxS"/>
-                            <constraint firstItem="FLA-x4-Syz" firstAttribute="top" secondItem="O3a-hX-fgX" secondAttribute="top" id="upK-8N-eDG"/>
-                            <constraint firstItem="kLS-be-BMj" firstAttribute="leading" secondItem="O3a-hX-fgX" secondAttribute="leading" id="yKI-Um-HFQ"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="errorMessage" destination="vAi-EP-ibK" id="mjL-I5-wo8"/>
-                        <outlet property="indicationView" destination="kLS-be-BMj" id="n3z-s8-Zg6"/>
-                        <outlet property="refreshButton" destination="QcA-W0-g61" id="TsH-5z-t4P"/>
-                        <outlet property="scrollView" destination="FLA-x4-Syz" id="uSN-oS-CUv"/>
-                        <segue destination="vXZ-lx-hvc" kind="modal" identifier="Camera Modal Segue" animates="NO" id="c3N-bm-QT1"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="k7p-JK-nwr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-308" y="-8"/>
-        </scene>
         <!--Camera View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -116,7 +19,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="LzV-33-4sA" kind="modal" identifier="Share Modal Segue" id="nRS-iT-rES"/>
+                        <segue destination="LzV-33-4sA" kind="modal" identifier="Share Modal Segue" animates="NO" id="nRS-iT-rES"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -358,9 +261,6 @@
         <image name="display-exposure1.png" width="150" height="150"/>
         <image name="display-exposure2.png" width="150" height="150"/>
         <image name="display-filters.png" width="150" height="150"/>
-        <image name="explore_camera2.png" width="99" height="99"/>
-        <image name="explore_refresh.png" width="99" height="99"/>
-        <image name="index-down-arrow.png" width="50" height="31"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

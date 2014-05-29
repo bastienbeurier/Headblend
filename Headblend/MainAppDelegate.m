@@ -7,7 +7,6 @@
 //
 
 #import "MainAppDelegate.h"
-#import "IndexViewController.h"
 
 @implementation MainAppDelegate
 
@@ -31,11 +30,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    UIViewController *currentController = self.window.rootViewController;
-    
-    if ([currentController isKindOfClass:[IndexViewController class]]) {
-        [((IndexViewController *)currentController) refreshBlends];
-    }
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
