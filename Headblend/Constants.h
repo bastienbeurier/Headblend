@@ -19,3 +19,4 @@ static const NSUInteger kScreenWidth = 320;
 static NSString * const kApiVersion = @"1";
 static NSString * const kProdAFSnapbyAPIBaseURLString = @"http://jokeface.herokuapp.com/";
 static NSString *const kProdBlendBaseURL = @"http://s3.amazonaws.com/jokeface_production/original/";
+static const NSUInteger kImageHeight = 400;

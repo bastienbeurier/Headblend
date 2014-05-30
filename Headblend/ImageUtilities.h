@@ -22,4 +22,6 @@
 
 + (NSString *)encodeToBase64String:(UIImage *)image;
 
++ (UIImage *)resizeImage:(UIImage *)image;
+
 @end

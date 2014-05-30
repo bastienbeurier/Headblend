@@ -7,6 +7,7 @@
 //
 
 #import "ImageUtilities.h"
+#import "Constants.h"
 
 @implementation ImageUtilities
 
@@ -148,6 +149,32 @@
 
 + (NSString *)encodeToBase64String:(UIImage *)image {
     return [UIImageJPEGRepresentation(image,0.9) base64EncodedStringWithOptions:0];
+}
+
++ (UIImage *)resizeImage:(UIImage *)image
+{
+    // Resize image
+    CGSize rescaleSize = image.size;
+    
+    CGFloat scaleRatio;
+    
+    if (rescaleSize.height > rescaleSize.width) {
+        scaleRatio = kImageHeight / rescaleSize.height;
+    } else {
+        scaleRatio = kImageHeight / rescaleSize.width;
+    }
+    
+    rescaleSize.height *= scaleRatio;
+    rescaleSize.width *= scaleRatio;
+    
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(rescaleSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, rescaleSize.width, rescaleSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 @end

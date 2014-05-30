@@ -17,6 +17,9 @@
 
 @property (weak, nonatomic) id <DisplayControllerDelegate> displayVCDelegate;
 
+- (NSArray *)getBlends;
+- (void)saveBlends:(NSArray *)blends;
+
 @end
 
 @protocol DisplayControllerDelegate

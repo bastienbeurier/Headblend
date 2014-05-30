@@ -31,7 +31,6 @@
 @property (strong, nonatomic) GPUImageExposureFilter *exposureFilter;
 @property (strong, nonatomic) GPUImageLevelsFilter *levelsFilter;
 @property (strong, nonatomic) GPUImageGrayscaleFilter *grayFilter;
-@property (strong, nonatomic) GPUImageVignetteFilter *vignetteFilter;
 
 @property (weak, nonatomic) IBOutlet UIButton *filterButton;
 @property (weak, nonatomic) IBOutlet UIButton *exposureFirstButton;
@@ -104,8 +103,22 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
+    [super viewWillDisappear:YES];
     
+    NSArray *blends = [self getBlends];
+    [self saveBlends:blends];
+    
+    self.topImageView.image = nil;
+    self.bottomImageView.image = nil;
+    self.firstPersonImageView.image = nil;
+    self.secondPersonImageView.image = nil;
+    
+    self.firstPersonImage = nil;
+    self.secondPersonImage = nil;
+}
+
+- (NSArray *)getBlends
+{
     self.backButton.hidden = YES;
     self.validateButton.hidden = YES;
     self.filterButton.hidden = YES;
@@ -134,7 +147,12 @@
     self.exposureSecondButton.hidden = NO;
     self.inverseButton.hidden = NO;
     
-    [ApiUtilities saveEncodedBlend1:[ImageUtilities encodeToBase64String:image1] andBlend2:[ImageUtilities encodeToBase64String:image2]];
+    return [[NSArray alloc] initWithObjects:image1, image2, nil];
+}
+
+- (void)saveBlends:(NSArray *)blends
+{
+    [ApiUtilities saveEncodedBlend1:[ImageUtilities encodeToBase64String:[blends objectAtIndex:0]] andBlend2:[ImageUtilities encodeToBase64String:[blends objectAtIndex:1]]];
 }
 
 - (void)centerScrollView:(UIScrollView *)scrollView
@@ -189,40 +207,15 @@
 }
 
 - (IBAction)validateButtonClicked:(id)sender {
-    self.backButton.hidden = YES;
-    self.validateButton.hidden = YES;
-    self.filterButton.hidden = YES;
-    self.exposureFirstButton.hidden = YES;
-    self.exposureSecondButton.hidden = YES;
-    self.inverseButton.hidden = YES;
-    
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image1 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [self inverseButtonClicked:nil];
-    
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image2 = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [self inverseButtonClicked:nil];
-    
-    self.backButton.hidden = NO;
-    self.validateButton.hidden = NO;
-    self.filterButton.hidden = NO;
-    self.exposureFirstButton.hidden = NO;
-    self.exposureSecondButton.hidden = NO;
-    self.inverseButton.hidden = NO;
+    NSArray *blends = [self getBlends];
+    [self saveBlends:blends];
     
     NSString *shareString = @"Download Jokeface.";
     
     //TODO: add App Store link
     NSURL *shareUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/jokeface/id%d?mt=8", APP_ID]];
     
-    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, image1, image2, nil];
+    NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, [blends objectAtIndex:0], [blends objectAtIndex:1], nil];
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     [activityViewController setValue:@"" forKey:@"subject"];
@@ -254,29 +247,26 @@
 
 - (void)updateImagesFilters
 {
-    UIImage *topImage = [self exposureFilter:self.firstPersonImage value:self.exposureLevel];
-    UIImage *bottomImage = [self exposureFilter:self.secondPersonImage value:-self.exposureLevel];
-    
     if (self.filterIndex == 1) {
-        topImage = [self vintageFilter:topImage];
-        bottomImage = [self vintageFilter:bottomImage];
+        self.topImageView.image = [self vintageFilter:[self exposureFilter:self.firstPersonImage value:self.exposureLevel]];
+        self.bottomImageView.image = [self vintageFilter:[self exposureFilter:self.secondPersonImage value:-self.exposureLevel]];
+        self.firstPersonImageView.image = self.topImageView.image;
+        self.secondPersonImageView.image = self.bottomImageView.image;
     } else if (self.filterIndex == 2) {
-        topImage = [self washedOutFilter:topImage];
-        bottomImage = [self washedOutFilter:bottomImage];
+        self.topImageView.image = [self washedOutFilter:[self exposureFilter:self.firstPersonImage value:self.exposureLevel]];
+        self.bottomImageView.image = [self washedOutFilter:[self exposureFilter:self.secondPersonImage value:-self.exposureLevel]];        self.firstPersonImageView.image = self.topImageView.image;
+        self.secondPersonImageView.image = self.bottomImageView.image;
     } else if (self.filterIndex == 3) {
-        topImage = [self blackAndWhiteFilter:topImage];
-        bottomImage = [self blackAndWhiteFilter:bottomImage];
+        self.topImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.firstPersonImage value:self.exposureLevel]];
+        self.bottomImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.secondPersonImage value:-self.exposureLevel]];
+        self.firstPersonImageView.image = self.topImageView.image;
+        self.secondPersonImageView.image = self.bottomImageView.image;
+    } else {
+        self.topImageView.image = [self exposureFilter:self.firstPersonImage value:self.exposureLevel];
+        self.bottomImageView.image = [self exposureFilter:self.secondPersonImage value:-self.exposureLevel];
+        self.firstPersonImageView.image = self.topImageView.image;
+        self.secondPersonImageView.image = self.bottomImageView.image;
     }
-    
-    [self.vignetteFilter setVignetteEnd:0.9];
-    
-    topImage = [self.vignetteFilter imageByFilteringImage:topImage];
-    bottomImage = [self.vignetteFilter imageByFilteringImage:bottomImage];
- 
-    self.topImageView.image = topImage;
-    self.bottomImageView.image = bottomImage;
-    self.firstPersonImageView.image = topImage;
-    self.secondPersonImageView.image = bottomImage;
 }
 
 - (IBAction)plusExpositionButtonClicked:(id)sender {
@@ -297,7 +287,6 @@
     self.exposureFilter = [[GPUImageExposureFilter alloc] init];
     self.levelsFilter = [[GPUImageLevelsFilter alloc] init];
     self.grayFilter = [[GPUImageGrayscaleFilter alloc] init];
-    self.vignetteFilter = [[GPUImageVignetteFilter alloc] init];
 }
 
 - (IBAction)changeFilter:(id)sender {

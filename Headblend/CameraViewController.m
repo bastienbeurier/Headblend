@@ -186,6 +186,7 @@
 // Display the relevant part of the photo once taken
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)editInfo
 {
+//    UIImage *image =  [ImageUtilities resizeImage:[editInfo objectForKey:UIImagePickerControllerOriginalImage]];
     UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
     UIImageOrientation orientation;
     double targetRatio = kScreenWidth / self.view.frame.size.height;
@@ -199,16 +200,18 @@
     
     if (self.pictureIndex == 0) {
         [self.imagePickerController.cameraOverlayView insertSubview:self.topImageView atIndex:1];
-        self.topImageView.image = [ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation];
+        self.topImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
         
         [self secondPictureMode];
     } else {
-        self.bottomImageView.image = [ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation];
+        self.bottomImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
         
         [self closeCamera];
         
         [self performSegueWithIdentifier:@"Share Modal Segue" sender:nil];
     }
+    
+    image = nil;
 }
 
 // --------------------------------
