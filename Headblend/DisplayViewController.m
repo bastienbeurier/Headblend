@@ -38,11 +38,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *inverseButton;
 
 @property (weak, nonatomic) IBOutlet UIView *tutorialView;
-
+@property (strong, nonatomic) NSTimer *firstTutorialTimer;
+@property (strong, nonatomic) NSTimer *secondTutorialTimer;
+@property (nonatomic) NSUInteger tutorialIndex;
 
 @property (nonatomic) float exposureLevel;
 @property (nonatomic) NSUInteger filterIndex;
 
+@property (nonatomic) CGFloat topScrollViewInitialContentOffsetY;
+@property (weak, nonatomic) IBOutlet UILabel *tutorialLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *firstTutorialImage;
 
 @end
 
@@ -63,6 +68,7 @@
     
     [self setUpFilters];
     
+    self.tutorialIndex = 0;
     self.exposureLevel = 0;
     self.filterIndex = 0;
     
@@ -80,10 +86,17 @@
     [self centerScrollView:self.topScrollView];
     [self centerScrollView:self.bottomScrollView];
     
+    self.topScrollViewInitialContentOffsetY = self.topScrollView.contentOffset.y;
+
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     if (![userDefaults objectForKey:@"ADJUST FACE TUTO PREF"]) {
         self.tutorialView.hidden = NO;
+        self.firstTutorialTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                         target:self
+                                       selector:@selector(zoomAnimationOnFace)
+                                       userInfo:nil
+                                        repeats:YES];
     } else {
         self.tutorialView.hidden = YES;
     }
@@ -115,6 +128,22 @@
     
     self.firstPersonImage = nil;
     self.secondPersonImage = nil;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)zoomAnimationOnFace
+{
+    if (self.topScrollView.contentOffset.y == self.topScrollViewInitialContentOffsetY) {
+        [self.topScrollView setZoomScale:1.0 animated:YES];
+    } else {
+        [self.topScrollView setZoomScale:1.1 animated:YES];
+        
+        [self.topScrollView setContentOffset:CGPointMake(self.topScrollView.contentOffset.x, self.topScrollViewInitialContentOffsetY) animated:YES];
+    }
 }
 
 - (NSArray *)getBlends
@@ -231,6 +260,14 @@
     } else {
         [self firstBlend];
     }
+    
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = @(M_PI);
+    rotationAnimation.duration = 0.5;
+    rotationAnimation.autoreverses = NO;
+    rotationAnimation.repeatCount = 0;
+    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.inverseButton.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
@@ -345,7 +382,48 @@
 }
 
 - (IBAction)tutorialViewClicked:(id)sender {
-    self.tutorialView.hidden = YES;
+    
+    if (self.tutorialIndex == 0) {
+        self.tutorialIndex = 1;
+        [self.firstTutorialTimer invalidate];
+        
+        [self.topScrollView setZoomScale:1.1 animated:NO];
+        
+        [self centerScrollView:self.topScrollView];
+        
+        self.firstTutorialTimer = nil;
+        
+        self.firstTutorialImage.hidden = YES;
+        
+        [self.view insertSubview:self.inverseButton aboveSubview:self.tutorialView];
+        
+        self.secondTutorialTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                                   target:self
+                                                                 selector:@selector(inverseButtonClicked:)
+                                                                 userInfo:nil
+                                                                  repeats:YES];
+        
+        self.tutorialLabel.text = @"...inverse faces...";
+    } else if (self.tutorialIndex == 1) {
+        self.tutorialIndex = 2;
+        [self.secondTutorialTimer invalidate];
+        [self firstBlend];
+        
+        [self.view insertSubview:self.tutorialView aboveSubview:self.inverseButton];
+        [self.view insertSubview:self.filterButton aboveSubview:self.tutorialView];
+        
+        self.tutorialLabel.text = @"...apply filters...";
+    } else if (self.tutorialIndex == 2) {
+        self.tutorialIndex = 3;
+        
+        [self.view insertSubview:self.tutorialView aboveSubview:self.filterButton];
+        [self.view insertSubview:self.validateButton aboveSubview:self.tutorialView];
+        
+        self.tutorialLabel.text = @"...and save!";
+
+    } else {
+        self.tutorialView.hidden = YES;
+    }
 }
 
 @end
