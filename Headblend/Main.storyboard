@@ -38,7 +38,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" maximumZoomScale="1.5" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXT-mZ-tjE">
+                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" minimumZoomScale="0.5" maximumZoomScale="3" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXT-mZ-tjE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="408"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -135,7 +135,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2K-Yg-IuV">
                                 <rect key="frame" x="10" y="10" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="camera-back.png">
+                                <state key="normal" image="camera-quit.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -149,13 +149,21 @@
                                     <constraint firstAttribute="height" constant="100" id="9NC-cD-pup"/>
                                     <constraint firstAttribute="width" constant="100" id="MUs-qg-j00"/>
                                 </constraints>
-                                <state key="normal" image="display-blend1.png">
+                                <state key="normal" image="display-flip.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="inverseButtonClicked:" destination="LzV-33-4sA" eventType="touchUpInside" id="K0D-tM-V6x"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="display-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="7mc-kS-aoE">
+                                <rect key="frame" x="110" y="358" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="cQR-e5-uiK"/>
+                                    <constraint firstAttribute="height" constant="100" id="evm-Mx-f7X"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFP-rR-SUb">
                                 <rect key="frame" x="10" y="348" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -236,6 +244,7 @@
                             <constraint firstItem="9Eo-So-GDG" firstAttribute="top" secondItem="4iw-IJ-IsS" secondAttribute="bottom" constant="110" id="Yf9-Hq-GDe"/>
                             <constraint firstItem="cwo-X4-Gwn" firstAttribute="top" secondItem="XT3-cY-ddO" secondAttribute="bottom" constant="10" id="Ywp-7Q-cgH"/>
                             <constraint firstItem="9Eo-So-GDG" firstAttribute="top" secondItem="CBn-GB-BT6" secondAttribute="bottom" id="Zzu-eQ-nBb"/>
+                            <constraint firstItem="4iw-IJ-IsS" firstAttribute="centerY" secondItem="7mc-kS-aoE" secondAttribute="centerY" id="aZ6-iL-89J"/>
                             <constraint firstAttribute="trailing" secondItem="Qud-QC-J6c" secondAttribute="trailing" id="eBQ-fG-BKR"/>
                             <constraint firstItem="XT3-cY-ddO" firstAttribute="top" secondItem="Y0u-4P-LWu" secondAttribute="bottom" constant="10" id="fpw-Cf-7mp"/>
                             <constraint firstItem="Qud-QC-J6c" firstAttribute="top" secondItem="Yl7-ZK-pds" secondAttribute="top" id="gev-Sv-wZr"/>
@@ -245,6 +254,7 @@
                             <constraint firstAttribute="centerX" secondItem="4iw-IJ-IsS" secondAttribute="centerX" id="jhu-Wv-Ht7"/>
                             <constraint firstAttribute="trailing" secondItem="cwo-X4-Gwn" secondAttribute="trailing" id="jz9-U2-s29"/>
                             <constraint firstItem="pJV-nv-Un6" firstAttribute="top" secondItem="Yl7-ZK-pds" secondAttribute="top" id="kh5-6T-5q8"/>
+                            <constraint firstItem="4iw-IJ-IsS" firstAttribute="centerX" secondItem="7mc-kS-aoE" secondAttribute="centerX" id="lZi-eK-jh6"/>
                             <constraint firstAttribute="trailing" secondItem="pJV-nv-Un6" secondAttribute="trailing" id="nbM-5o-Cj5"/>
                             <constraint firstItem="CBn-GB-BT6" firstAttribute="top" secondItem="cFP-rR-SUb" secondAttribute="bottom" constant="10" id="rMO-VN-uOe"/>
                             <constraint firstItem="9Eo-So-GDG" firstAttribute="top" secondItem="pJV-nv-Un6" secondAttribute="bottom" id="uM6-2b-CVl"/>
@@ -261,6 +271,7 @@
                         <outlet property="firstPersonImageView" destination="CBn-GB-BT6" id="Cs2-Iq-5OB"/>
                         <outlet property="firstTutorialImage" destination="k15-QP-jNJ" id="DA1-Pe-W6a"/>
                         <outlet property="inverseButton" destination="4iw-IJ-IsS" id="BXB-XX-zDa"/>
+                        <outlet property="logo" destination="7mc-kS-aoE" id="YJo-iS-JWb"/>
                         <outlet property="secondPersonImageView" destination="cwo-X4-Gwn" id="SXt-jw-5cV"/>
                         <outlet property="topImageView" destination="diK-SP-yFv" id="d12-Rt-cxZ"/>
                         <outlet property="topScrollView" destination="YXT-mZ-tjE" id="C95-rc-MH8"/>
@@ -281,12 +292,13 @@
     </scenes>
     <resources>
         <image name="Spread.png" width="150" height="150"/>
-        <image name="camera-back.png" width="100" height="100"/>
+        <image name="camera-quit.png" width="150" height="150"/>
         <image name="camera-validate.png" width="100" height="100"/>
-        <image name="display-blend1.png" width="200" height="200"/>
         <image name="display-exposure1.png" width="150" height="150"/>
         <image name="display-exposure2.png" width="150" height="150"/>
         <image name="display-filters.png" width="150" height="150"/>
+        <image name="display-flip.png" width="200" height="200"/>
+        <image name="display-logo.png" width="400" height="400"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

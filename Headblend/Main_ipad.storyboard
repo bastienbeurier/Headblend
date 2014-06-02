@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="I8z-s5-PnN">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Camera View Controller-->
+        <scene sceneID="fW0-Sw-JiN">
+            <objects>
+                <viewController id="I8z-s5-PnN" customClass="CameraViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6VP-Gf-b2i"/>
+                        <viewControllerLayoutGuide type="bottom" id="14t-75-xgV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ole-La-iQg">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="dNM-za-Duf" kind="modal" identifier="Share Modal Segue" animates="NO" id="zrb-RI-zQm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3rs-rk-Vay" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-315" y="-18"/>
+        </scene>
+        <!--Display View Controller-->
+        <scene sceneID="iQL-MN-1Wx">
+            <objects>
+                <viewController id="dNM-za-Duf" customClass="DisplayViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SyI-CC-CoS"/>
+                        <viewControllerLayoutGuide type="bottom" id="g3z-uX-nyY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cOd-Ze-Hjm">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" minimumZoomScale="0.5" maximumZoomScale="3" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTh-tk-wT8">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="640"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AL2-J1-XlD">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="640"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                            </scrollView>
+                            <scrollView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" maximumZoomScale="1.5" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMd-uO-o0M">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="640"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e30-dR-aUy">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="640"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                            </scrollView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9q-EU-wJ8">
+                                <rect key="frame" x="0.0" y="640" width="384" height="384"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7lo-ao-a8q">
+                                <rect key="frame" x="384" y="640" width="384" height="384"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNe-7p-x2k">
+                                <rect key="frame" x="708" y="10" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="camera-validate.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="validateButtonClicked:" destination="dNM-za-Duf" eventType="touchUpInside" id="cr8-Tz-GUa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgs-Xm-Yey">
+                                <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="camera-quit.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonClicked:" destination="dNM-za-Duf" eventType="touchUpInside" id="0Ui-Bd-CdM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hh1-Ws-t99">
+                                <rect key="frame" x="334" y="590" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="display-flip.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="inverseButtonClicked:" destination="dNM-za-Duf" eventType="touchUpInside" id="cVe-Zx-dhY"/>
+                                </connections>
+                            </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="display-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="64u-jW-P1e">
+                                <rect key="frame" x="334" y="590" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynS-Ss-Rga">
+                                <rect key="frame" x="10" y="580" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="display-filters.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeFilter:" destination="dNM-za-Duf" eventType="touchUpInside" id="DFm-HU-17s"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p4P-UL-cUk">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Spread.png" translatesAutoresizingMaskIntoConstraints="NO" id="lf4-7x-F6k">
+                                        <rect key="frame" x="324" y="35" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Adjust faces with your fingers..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K48-RR-JKU">
+                                        <rect key="frame" x="0.0" y="497" width="768" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap anywhere to dismiss" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3J-VC-1gf">
+                                        <rect key="frame" x="0.0" y="989" width="768" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="WGX-9X-Aq4" appends="YES" id="JEp-56-SNO"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="qgs-Xm-Yey" id="ZHr-uv-SGY"/>
+                        <outlet property="bottomImageView" destination="e30-dR-aUy" id="uoS-sR-R3S"/>
+                        <outlet property="bottomScrollView" destination="XMd-uO-o0M" id="Tda-Zp-V66"/>
+                        <outlet property="filterButton" destination="ynS-Ss-Rga" id="AVQ-pg-LfF"/>
+                        <outlet property="firstPersonImageView" destination="e9q-EU-wJ8" id="HJp-G0-MQh"/>
+                        <outlet property="firstTutorialImage" destination="lf4-7x-F6k" id="cew-1w-vi0"/>
+                        <outlet property="inverseButton" destination="hh1-Ws-t99" id="SyC-iN-wtt"/>
+                        <outlet property="logo" destination="64u-jW-P1e" id="Hc2-lQ-WDn"/>
+                        <outlet property="secondPersonImageView" destination="7lo-ao-a8q" id="C7w-H8-1oB"/>
+                        <outlet property="topImageView" destination="AL2-J1-XlD" id="EJW-gD-f9B"/>
+                        <outlet property="topScrollView" destination="dTh-tk-wT8" id="em9-HU-gdp"/>
+                        <outlet property="tutorialLabel" destination="K48-RR-JKU" id="s9F-4L-1pw"/>
+                        <outlet property="tutorialView" destination="p4P-UL-cUk" id="kad-4d-Cew"/>
+                        <outlet property="validateButton" destination="aNe-7p-x2k" id="OAY-js-nI9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iTv-sI-17I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="WGX-9X-Aq4">
+                    <connections>
+                        <action selector="tutorialViewClicked:" destination="dNM-za-Duf" id="yST-fC-ne3"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="666" y="-8"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Spread.png" width="150" height="150"/>
+        <image name="camera-quit.png" width="150" height="150"/>
+        <image name="camera-validate.png" width="100" height="100"/>
+        <image name="display-filters.png" width="150" height="150"/>
+        <image name="display-flip.png" width="200" height="200"/>
+        <image name="display-logo.png" width="400" height="400"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

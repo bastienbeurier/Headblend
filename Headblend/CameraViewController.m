@@ -14,15 +14,13 @@
 @interface CameraViewController ()
 
 @property (strong, nonatomic) UIImagePickerController * imagePickerController;
+@property (strong, nonatomic) UIImagePickerController * libraryController;
 @property (nonatomic) NSUInteger pictureIndex;
 @property (strong, nonatomic) UIImageView *topImageView;
 @property (strong, nonatomic) UIImageView *bottomImageView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *captureButton;
 @property (weak, nonatomic) IBOutlet UIImageView *faceTemplate;
-@property (weak, nonatomic) IBOutlet UIView *firstToast;
-@property (weak, nonatomic) IBOutlet UIView *secondToast;
-@property (weak, nonatomic) IBOutlet UIButton *quitButton;
 
 @end
 
@@ -43,9 +41,6 @@
     self.topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-    [self.firstToast.layer setCornerRadius:5.0f];
-    [self.secondToast.layer setCornerRadius:5.0f];
-    
     [self firstPictureMode];
     
     [self.imagePickerController.cameraOverlayView insertSubview:self.bottomImageView atIndex:0];
@@ -54,11 +49,6 @@
     self.backFromDisplay = NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [ImageUtilities outerGlow:self.backButton];
-    [ImageUtilities outerGlow:self.faceTemplate];
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -81,9 +71,8 @@
     
     self.backButton.hidden = YES;
     self.captureButton.hidden = NO;
-    self.firstToast.hidden = YES;
-    self.secondToast.hidden = YES;
-    self.quitButton.hidden = NO;
+    
+    self.faceTemplate.image = [UIImage imageNamed:@"camera-face1"];
     
     self.topImageView.image = nil;
     self.bottomImageView.image = nil;
@@ -94,8 +83,6 @@
     self.bottomImageView.backgroundColor = [UIColor blackColor];
     
     self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-    
-    [self showFirstToast];
 }
 
 - (void)secondPictureMode
@@ -104,29 +91,14 @@
     
     self.backButton.hidden = NO;
     self.captureButton.hidden = NO;
-    self.firstToast.hidden = YES;
-    self.secondToast.hidden = YES;
-    self.quitButton.hidden = YES;
+    
+    self.faceTemplate.image = [UIImage imageNamed:@"camera-face2"];
     
     self.bottomImageView.image = nil;
     [ImageUtilities hideBottomHalf:self.topImageView offset:0];
     [ImageUtilities hideTopHalf:self.bottomImageView offset:0];
     
     self.bottomImageView.backgroundColor = [UIColor clearColor];
-    
-    self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-    
-    [self showSecondToast];
-}
-
-- (void)showFirstToast
-{
-    self.firstToast.hidden = NO;
-}
-
-- (void)showSecondToast
-{
-    self.secondToast.hidden = NO;
 }
 
 // ----------------------------------------------------------
@@ -186,6 +158,15 @@
 // Display the relevant part of the photo once taken
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)editInfo
 {
+    if (self.libraryController && self.imagePickerController) {
+        [self dismissViewControllerAnimated:NO completion:^{
+            [self presentViewController:self.imagePickerController animated:NO completion:NULL];
+
+        }];
+        
+        self.libraryController = nil;
+    }
+    
 //    UIImage *image =  [ImageUtilities resizeImage:[editInfo objectForKey:UIImagePickerControllerOriginalImage]];
     UIImage *image =  [editInfo objectForKey:UIImagePickerControllerOriginalImage];
     UIImageOrientation orientation;
@@ -200,11 +181,19 @@
     
     if (self.pictureIndex == 0) {
         [self.imagePickerController.cameraOverlayView insertSubview:self.topImageView atIndex:1];
-        self.topImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
+        if (self.view.frame.size.height == 568) {
+            self.topImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
+        } else {
+            self.topImageView.image = [ImageUtilities resizeImage:image];
+        }
         
         [self secondPictureMode];
     } else {
-        self.bottomImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
+        if (self.view.frame.size.height == 568) {
+            self.bottomImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
+        } else {
+            self.bottomImageView.image = [ImageUtilities resizeImage:image];
+        }
         
         [self closeCamera];
         
@@ -253,14 +242,38 @@
 
 - (void)presentCameraController
 {
-    
     [self presentViewController:self.imagePickerController animated:NO completion:NULL];
 }
 
-- (IBAction)quitButtonClicked:(id)sender {
+- (IBAction)chooseLibraryImage:(id)sender {
+    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        return;
+    }
+    
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.delegate = self;
+    
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    self.libraryController = imagePickerController;
+    
+    self.libraryController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    
     [self dismissViewControllerAnimated:NO completion:^{
-        [self dismissViewControllerAnimated:NO completion:nil];
+        [self presentViewController:self.libraryController animated:NO completion:NULL];
     }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    if (self.libraryController && self.imagePickerController) {
+        [self dismissViewControllerAnimated:NO completion:^{
+            [self presentViewController:self.imagePickerController animated:NO completion:NULL];
+            
+        }];
+        
+        self.libraryController = nil;
+    }
 }
 
 @end

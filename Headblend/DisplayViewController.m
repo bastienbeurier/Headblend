@@ -48,6 +48,7 @@
 @property (nonatomic) CGFloat topScrollViewInitialContentOffsetY;
 @property (weak, nonatomic) IBOutlet UILabel *tutorialLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *firstTutorialImage;
+@property (weak, nonatomic) IBOutlet UIImageView *logo;
 
 @end
 
@@ -151,9 +152,8 @@
     self.backButton.hidden = YES;
     self.validateButton.hidden = YES;
     self.filterButton.hidden = YES;
-    self.exposureFirstButton.hidden = YES;
-    self.exposureSecondButton.hidden = YES;
     self.inverseButton.hidden = YES;
+    self.logo.hidden = NO;
     
     UIGraphicsBeginImageContext(self.view.bounds.size);
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -172,9 +172,8 @@
     self.backButton.hidden = NO;
     self.validateButton.hidden = NO;
     self.filterButton.hidden = NO;
-    self.exposureFirstButton.hidden = NO;
-    self.exposureSecondButton.hidden = NO;
     self.inverseButton.hidden = NO;
+    self.logo.hidden = YES;
     
     return [[NSArray alloc] initWithObjects:image1, image2, nil];
 }
@@ -239,10 +238,10 @@
     NSArray *blends = [self getBlends];
     [self saveBlends:blends];
     
-    NSString *shareString = @"Download Jokeface.";
+    NSString *shareString = @"Download Selflip!";
     
     //TODO: add App Store link
-    NSURL *shareUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/jokeface/id%d?mt=8", APP_ID]];
+    NSURL *shareUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/selflip/id%d?mt=8", APP_ID]];
     
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, [blends objectAtIndex:0], [blends objectAtIndex:1], nil];
     
