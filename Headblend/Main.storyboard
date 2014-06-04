@@ -275,6 +275,16 @@
                                     <action selector="editButtonClicked:" destination="LzV-33-4sA" eventType="touchUpInside" id="Dpp-VA-5y9"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download Selflip on the App Store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcO-s3-mpp">
+                                <rect key="frame" x="0.0" y="533" width="320" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="ml3-KJ-vyM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJV-nv-Un6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -352,6 +362,7 @@
                             <constraint firstItem="cwo-X4-Gwn" firstAttribute="top" secondItem="Qud-QC-J6c" secondAttribute="bottom" id="9Mb-Pi-yjv"/>
                             <constraint firstAttribute="trailing" secondItem="cwo-X4-Gwn" secondAttribute="trailing" constant="-1" id="BCE-iX-Smy"/>
                             <constraint firstItem="K2K-Yg-IuV" firstAttribute="top" secondItem="Yl7-ZK-pds" secondAttribute="top" constant="10" id="DF2-PA-lwt"/>
+                            <constraint firstItem="IcO-s3-mpp" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" id="EhK-dp-5DU"/>
                             <constraint firstAttribute="trailing" secondItem="XvP-uh-vcn" secondAttribute="trailing" constant="12" id="Hgw-oL-jNS"/>
                             <constraint firstItem="YXT-mZ-tjE" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" id="Hjc-WM-5Hv"/>
                             <constraint firstItem="CBn-GB-BT6" firstAttribute="top" secondItem="7mc-kS-aoE" secondAttribute="top" constant="50" id="IF8-iJ-Ofe"/>
@@ -366,6 +377,7 @@
                             <constraint firstItem="Jnw-8f-ggn" firstAttribute="leading" secondItem="q3u-PN-HTh" secondAttribute="trailing" constant="5" id="TUA-OG-XiE"/>
                             <constraint firstItem="YXT-mZ-tjE" firstAttribute="top" secondItem="Yl7-ZK-pds" secondAttribute="top" id="Vla-Aq-PtO"/>
                             <constraint firstAttribute="trailing" secondItem="YXT-mZ-tjE" secondAttribute="trailing" id="WEZ-eo-rfg"/>
+                            <constraint firstAttribute="trailing" secondItem="IcO-s3-mpp" secondAttribute="trailing" id="WJn-UR-agw"/>
                             <constraint firstAttribute="trailing" secondItem="pJV-nv-Un6" secondAttribute="trailing" id="Wen-J7-1mq"/>
                             <constraint firstAttribute="centerX" secondItem="7mc-kS-aoE" secondAttribute="centerX" id="Xbi-eM-spG"/>
                             <constraint firstItem="K2K-Yg-IuV" firstAttribute="leading" secondItem="Yl7-ZK-pds" secondAttribute="leading" constant="10" id="Xot-Vh-DW1"/>
@@ -383,6 +395,7 @@
                             <constraint firstItem="VUT-AR-c1h" firstAttribute="top" secondItem="Jnw-8f-ggn" secondAttribute="bottom" constant="5" id="mu5-Nf-bfk"/>
                             <constraint firstAttribute="trailing" secondItem="5Ur-EW-ghx" secondAttribute="trailing" constant="12" id="nSr-sP-WNx"/>
                             <constraint firstItem="hvT-JO-4FX" firstAttribute="top" secondItem="cwo-X4-Gwn" secondAttribute="bottom" id="naK-oO-FRX"/>
+                            <constraint firstItem="hvT-JO-4FX" firstAttribute="top" secondItem="IcO-s3-mpp" secondAttribute="bottom" id="p27-tN-eIe"/>
                             <constraint firstItem="XvP-uh-vcn" firstAttribute="centerX" secondItem="nYK-qM-rxp" secondAttribute="centerX" id="qem-oU-fEb"/>
                             <constraint firstItem="hvT-JO-4FX" firstAttribute="top" secondItem="JRW-i2-aJU" secondAttribute="bottom" constant="5" id="r31-MS-zlk"/>
                             <constraint firstItem="4iw-IJ-IsS" firstAttribute="centerX" secondItem="7mc-kS-aoE" secondAttribute="centerX" id="tQq-9x-khX"/>
@@ -416,6 +429,7 @@
                         <outlet property="tutorialInstructionContainer" destination="gpd-cE-vTw" id="MPT-Nh-mwj"/>
                         <outlet property="tutorialView" destination="pJV-nv-Un6" id="eCZ-N3-hI4"/>
                         <outlet property="validateButton" destination="UZE-pk-E1K" id="6Rc-MM-95m"/>
+                        <outlet property="waterMark" destination="IcO-s3-mpp" id="Irn-dw-Iym"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifU-u3-SHJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

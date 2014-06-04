@@ -239,6 +239,16 @@
                                     <action selector="editButtonClicked:" destination="dNM-za-Duf" eventType="touchUpInside" id="H7u-DN-Qys"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download Selflip on the App Store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5H7-Wa-K9L">
+                                <rect key="frame" x="0.0" y="964" width="768" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="xhl-oV-UKS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p4P-UL-cUk">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -325,11 +335,14 @@
                             <constraint firstItem="aNe-7p-x2k" firstAttribute="top" secondItem="cOd-Ze-Hjm" secondAttribute="top" constant="10" id="Gpk-Rs-k1l"/>
                             <constraint firstItem="g3z-uX-nyY" firstAttribute="top" secondItem="7lo-ao-a8q" secondAttribute="bottom" id="L70-nJ-RR6"/>
                             <constraint firstItem="g3z-uX-nyY" firstAttribute="top" secondItem="64u-jW-P1e" secondAttribute="bottom" constant="334" id="R1a-YK-SCr"/>
+                            <constraint firstItem="5H7-Wa-K9L" firstAttribute="leading" secondItem="cOd-Ze-Hjm" secondAttribute="leading" id="TZj-bc-rqG"/>
+                            <constraint firstItem="g3z-uX-nyY" firstAttribute="top" secondItem="5H7-Wa-K9L" secondAttribute="bottom" id="Tjx-Kd-U0e"/>
                             <constraint firstItem="g3z-uX-nyY" firstAttribute="top" secondItem="hh1-Ws-t99" secondAttribute="bottom" constant="334" id="XXa-0S-3lZ"/>
                             <constraint firstAttribute="trailing" secondItem="dTh-tk-wT8" secondAttribute="trailing" id="ei1-lg-xm1"/>
                             <constraint firstItem="dTh-tk-wT8" firstAttribute="leading" secondItem="cOd-Ze-Hjm" secondAttribute="leading" id="fB5-JE-MH9"/>
                             <constraint firstItem="e9q-EU-wJ8" firstAttribute="top" secondItem="ynS-Ss-Rga" secondAttribute="bottom" constant="10" id="htt-d1-XwC"/>
                             <constraint firstAttribute="centerX" secondItem="hh1-Ws-t99" secondAttribute="centerX" id="oxa-FA-DKD"/>
+                            <constraint firstAttribute="trailing" secondItem="5H7-Wa-K9L" secondAttribute="trailing" id="pMe-Jp-bTG"/>
                             <constraint firstAttribute="trailing" secondItem="aNe-7p-x2k" secondAttribute="trailing" constant="10" id="syG-TK-QyB"/>
                             <constraint firstItem="XMd-uO-o0M" firstAttribute="leading" secondItem="cOd-Ze-Hjm" secondAttribute="leading" id="waW-lA-LhT"/>
                             <constraint firstItem="p4P-UL-cUk" firstAttribute="leading" secondItem="cOd-Ze-Hjm" secondAttribute="leading" id="z86-pf-Hdt"/>
@@ -354,8 +367,10 @@
                         <outlet property="thirdFilterButton" destination="g5s-zi-E1o" id="9Bl-Fa-S9e"/>
                         <outlet property="topImageView" destination="AL2-J1-XlD" id="EJW-gD-f9B"/>
                         <outlet property="topScrollView" destination="dTh-tk-wT8" id="em9-HU-gdp"/>
+                        <outlet property="tutorialInstructionContainer" destination="Tyl-Qg-1Ug" id="3hS-fR-8JB"/>
                         <outlet property="tutorialView" destination="p4P-UL-cUk" id="kad-4d-Cew"/>
                         <outlet property="validateButton" destination="aNe-7p-x2k" id="OAY-js-nI9"/>
+                        <outlet property="waterMark" destination="5H7-Wa-K9L" id="463-Aw-Kjd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTv-sI-17I" userLabel="First Responder" sceneMemberID="firstResponder"/>

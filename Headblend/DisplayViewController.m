@@ -56,6 +56,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *fourthFilterButton;
 
 @property (nonatomic) BOOL editionMode;
+@property (weak, nonatomic) IBOutlet UILabel *waterMark;
 
 @end
 
@@ -173,15 +174,6 @@
     [super viewDidAppear:animated];
 }
 
-- (void)zoomAnimationOnFace
-{
-    if (self.topScrollView.zoomScale < 1.3) {
-        [self.topScrollView setZoomScale:1.3 animated:YES];
-    } else {
-        [self.topScrollView setZoomScale:1.1 animated:YES];
-    }
-}
-
 - (NSArray *)getBlends
 {
     self.backButton.hidden = YES;
@@ -189,6 +181,10 @@
     self.editButton.hidden = YES;
     self.flipButton.hidden = YES;
     self.logo.hidden = NO;
+    
+    self.waterMark.hidden = NO;
+    
+    [ImageUtilities outerGlow:self.waterMark];
     
     UIGraphicsBeginImageContext(self.view.bounds.size);
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -209,6 +205,8 @@
     self.editButton.hidden = NO;
     self.flipButton.hidden = NO;
     self.logo.hidden = YES;
+    
+    self.waterMark.hidden = YES;
     
     return [[NSArray alloc] initWithObjects:image1, image2, nil];
 }
@@ -281,7 +279,7 @@
     NSArray *blends = [self getBlends];
     [self saveBlends:blends];
     
-    NSString *shareString = @"Download Selflip!";
+    NSString *shareString = @"Download Selflip.";
     
     //TODO: add App Store link
     NSURL *shareUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/selflip/id%d?mt=8", APP_ID]];
@@ -498,7 +496,16 @@
     
     [self.topScrollView setZoomScale:1.1 animated:NO];
     
-    [self centerScrollView:self.topScrollView];
+//    [self centerScrollView:self.topScrollView];
+}
+
+- (void)zoomAnimationOnFace
+{
+    if (self.topScrollView.zoomScale < 1.2) {
+        [self.topScrollView setZoomScale:1.3 animated:YES];
+    } else {
+        [self.topScrollView setZoomScale:1.1 animated:YES];
+    }
 }
 
 

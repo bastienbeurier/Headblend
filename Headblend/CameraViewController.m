@@ -10,10 +10,11 @@
 #import "ImageUtilities.h"
 #import "Constants.h"
 #import "DisplayViewController.h"
+#import "PortraitImagePickerViewController.h"
 
 @interface CameraViewController ()
 
-@property (strong, nonatomic) UIImagePickerController * imagePickerController;
+@property (strong, nonatomic) PortraitImagePickerViewController * imagePickerController;
 @property (strong, nonatomic) UIImagePickerController * libraryController;
 @property (nonatomic) NSUInteger pictureIndex;
 @property (strong, nonatomic) UIImageView *topImageView;
@@ -45,6 +46,9 @@
     
     self.topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    self.topImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.bottomImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     [self firstPictureMode];
     
@@ -114,7 +118,7 @@
 - (void) allocAndInitFullScreenCamera
 {
     // Create custom camera view
-    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    PortraitImagePickerViewController *imagePickerController = [PortraitImagePickerViewController new];
     if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         return;
     }
