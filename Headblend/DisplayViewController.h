@@ -12,8 +12,11 @@
 
 @interface DisplayViewController : UIViewController <UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImage *firstPersonImage;
-@property (weak, nonatomic) IBOutlet UIImage *secondPersonImage;
+@property (weak, nonatomic) UIImage *firstPersonImage;
+@property (weak, nonatomic) UIImage *secondPersonImage;
+@property (weak, nonatomic) UIImage *firstPersonImageFiltered;
+@property (weak, nonatomic) UIImage *secondPersonImageFiltered;
+
 
 @property (weak, nonatomic) id <DisplayControllerDelegate> displayVCDelegate;
 

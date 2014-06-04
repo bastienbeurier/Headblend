@@ -57,7 +57,6 @@
 
 @property (nonatomic) BOOL editionMode;
 
-
 @end
 
 @implementation DisplayViewController
@@ -102,6 +101,9 @@
     [self.secondImageExposureSlider setMinimumValue:-2.0];
     [self.secondImageExposureSlider setMaximumValue:2.0];
     [self.secondImageExposureSlider setValue:0.0];
+    
+    self.firstPersonImageFiltered = self.firstPersonImage;
+    self.secondPersonImageFiltered = self.secondPersonImage;
     
     self.topImageView.image = self.firstPersonImage;
     self.bottomImageView.image = self.secondPersonImage;
@@ -318,26 +320,60 @@
     }
 }
 
-- (void)updateImagesFilters
+- (void)updateFilter
 {
     if (self.filterIndex == 1) {
-        self.topImageView.image = [self vintageFilter:[self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value]];
-        self.bottomImageView.image = [self vintageFilter:[self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value]];
-        self.firstPersonImageView.image = self.topImageView.image;
-        self.secondPersonImageView.image = self.bottomImageView.image;
+        self.firstPersonImageFiltered = [self vintageFilter:self.firstPersonImage];
+        self.secondPersonImageFiltered = [self vintageFilter:self.secondPersonImage];
     } else if (self.filterIndex == 2) {
-        self.topImageView.image = [self washedOutFilter:[self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value]];
-        self.bottomImageView.image = [self washedOutFilter:[self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value]];        self.firstPersonImageView.image = self.topImageView.image;
-        self.secondPersonImageView.image = self.bottomImageView.image;
+        self.firstPersonImageFiltered = [self washedOutFilter:self.firstPersonImage];
+        self.secondPersonImageFiltered = [self washedOutFilter:self.secondPersonImage];
     } else if (self.filterIndex == 3) {
-        self.topImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value]];
-        self.bottomImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value]];
-        self.firstPersonImageView.image = self.topImageView.image;
-        self.secondPersonImageView.image = self.bottomImageView.image;
+        self.firstPersonImageFiltered = [self blackAndWhiteFilter:self.firstPersonImage];
+        self.secondPersonImageFiltered = [self blackAndWhiteFilter:self.secondPersonImage];
     } else {
-        self.topImageView.image = [self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value];
-        self.bottomImageView.image = [self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value];
+        self.firstPersonImageFiltered = self.firstPersonImage;
+        self.secondPersonImageFiltered = self.secondPersonImage;
+    }
+    
+    self.topImageView.image = [self exposureFilter:self.firstPersonImageFiltered value:self.firstImageExposureSlider.value];
+    self.bottomImageView.image = [self exposureFilter:self.secondPersonImageFiltered value:self.secondImageExposureSlider.value];
+    
+    self.firstPersonImageView.image = self.topImageView.image;
+    self.secondPersonImageView.image = self.bottomImageView.image;
+}
+
+- (void)updateExposureForImage:(NSUInteger)image
+{
+    if (image == 1) {
+        if (self.firstPersonImageFiltered == nil) {
+            if (self.filterIndex == 1) {
+                self.firstPersonImageFiltered = [self vintageFilter:self.firstPersonImage];
+            } else if (self.filterIndex == 2) {
+                self.firstPersonImageFiltered = [self washedOutFilter:self.firstPersonImage];
+            } else if (self.filterIndex == 3) {
+                self.firstPersonImageFiltered = [self blackAndWhiteFilter:self.firstPersonImage];
+            } else {
+                self.firstPersonImageFiltered = self.firstPersonImage;
+            }
+        }
+        
+        self.topImageView.image = [self exposureFilter:self.firstPersonImageFiltered value:self.firstImageExposureSlider.value];
         self.firstPersonImageView.image = self.topImageView.image;
+    } else {
+        if (self.secondPersonImageFiltered == nil) {
+            if (self.filterIndex == 1) {
+                self.secondPersonImageFiltered = [self vintageFilter:self.secondPersonImage];
+            } else if (self.filterIndex == 2) {
+                self.secondPersonImageFiltered = [self washedOutFilter:self.secondPersonImage];
+            } else if (self.filterIndex == 3) {
+                self.secondPersonImageFiltered = [self blackAndWhiteFilter:self.secondPersonImage];
+            } else {
+                self.secondPersonImageFiltered = self.secondPersonImage;
+            }
+        }
+        
+        self.bottomImageView.image = [self exposureFilter:self.secondPersonImageFiltered value:self.secondImageExposureSlider.value];
         self.secondPersonImageView.image = self.bottomImageView.image;
     }
 }
@@ -423,14 +459,10 @@
     [self.sepiaFilter setIntensity:1.0];
     
     //0 - 4
-    [self.contrastFilter setContrast:1.2];
+//    [self.contrastFilter setContrast:1.2];
     
-    // - 4 - 4
-    [self.exposureFilter setExposure:0.2];
-    
-    image = [self.sepiaFilter imageByFilteringImage:image];
-    image = [self.contrastFilter imageByFilteringImage:image];
-    return [self.exposureFilter imageByFilteringImage:image];
+    return [self.sepiaFilter imageByFilteringImage:image];
+//    return [self.contrastFilter imageByFilteringImage:image];
 }
 
 - (UIImage *)washedOutFilter:(UIImage *)image
@@ -440,14 +472,10 @@
     [self.levelsFilter setBlueMin:0.03 gamma:1.0 max:1.0 minOut:0.0 maxOut:1.0];
     
     //0 - 4
-    [self.contrastFilter setContrast:0.8];
+//    [self.contrastFilter setContrast:0.8];
     
-    // - 4 - 4
-    [self.exposureFilter setExposure:0.2];
-    
-    image = [self.levelsFilter imageByFilteringImage:image];
-    image = [self.contrastFilter imageByFilteringImage:image];
-    return [self.exposureFilter imageByFilteringImage:image];
+    return [self.levelsFilter imageByFilteringImage:image];
+//    return [self.contrastFilter imageByFilteringImage:image];
 }
 
 - (UIImage *)blackAndWhiteFilter:(UIImage *)image
@@ -475,10 +503,10 @@
 
 
 - (IBAction)secondImageExposureSliderChanged:(id)sender {
-    [self updateImagesFilters];
+    [self updateExposureForImage:2];
 }
 - (IBAction)firstImageExposureSliderChanged:(id)sender {
-    [self updateImagesFilters];
+    [self updateExposureForImage:1];
 }
 
 - (IBAction)imageBorderSliderChanged:(id)sender {
@@ -495,28 +523,28 @@
     [self setFilterButtonBorder:self.firstFilterButton];
     
     self.filterIndex = 0;
-    [self updateImagesFilters];
+    [self updateFilter];
 }
 
 - (IBAction)secondFilterClicked:(id)sender {
     [self setFilterButtonBorder:self.secondFilterButton];
     
     self.filterIndex = 1;
-    [self updateImagesFilters];
+    [self updateFilter];
 }
 
 - (IBAction)thirdFilterClicked:(id)sender {
     [self setFilterButtonBorder:self.thirdFilterButton];
     
     self.filterIndex = 2;
-    [self updateImagesFilters];
+    [self updateFilter];
 }
 
 - (IBAction)fourthFilterClicked:(id)sender {
     [self setFilterButtonBorder:self.fourthFilterButton];
     
     self.filterIndex = 3;
-    [self updateImagesFilters];
+    [self updateFilter];
 }
 
 - (void)setFilterButtonBorder:(UIButton *)button

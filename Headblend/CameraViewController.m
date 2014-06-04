@@ -151,6 +151,8 @@
         }
         
         imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+        
+        
     } else {
         imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
@@ -165,7 +167,7 @@
 {
     if (self.libraryController && self.imagePickerController) {
         [self dismissViewControllerAnimated:NO completion:^{
-            [self presentViewController:self.imagePickerController animated:NO completion:NULL];
+            [self presentCameraController];
 
         }];
         
@@ -281,8 +283,7 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     if (self.libraryController && self.imagePickerController) {
         [self dismissViewControllerAnimated:NO completion:^{
-            [self presentViewController:self.imagePickerController animated:NO completion:NULL];
-            
+            [self presentCameraController];
         }];
         
         self.libraryController = nil;
