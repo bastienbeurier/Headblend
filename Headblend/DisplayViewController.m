@@ -12,8 +12,6 @@
 #import "ApiUtilities.h"
 #import "Constants.h"
 
-#define EXPOSURE_UNIT 0.05
-
 @interface DisplayViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *bottomImageView;
@@ -32,23 +30,33 @@
 @property (strong, nonatomic) GPUImageLevelsFilter *levelsFilter;
 @property (strong, nonatomic) GPUImageGrayscaleFilter *grayFilter;
 
-@property (weak, nonatomic) IBOutlet UIButton *filterButton;
-@property (weak, nonatomic) IBOutlet UIButton *exposureFirstButton;
-@property (weak, nonatomic) IBOutlet UIButton *exposureSecondButton;
-@property (weak, nonatomic) IBOutlet UIButton *inverseButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (weak, nonatomic) IBOutlet UIButton *flipButton;
 
 @property (weak, nonatomic) IBOutlet UIView *tutorialView;
-@property (strong, nonatomic) NSTimer *firstTutorialTimer;
-@property (strong, nonatomic) NSTimer *secondTutorialTimer;
-@property (nonatomic) NSUInteger tutorialIndex;
+@property (strong, nonatomic) NSTimer *tutorialTimer;
+@property (weak, nonatomic) IBOutlet UIView *tutorialInstructionContainer;
 
-@property (nonatomic) float exposureLevel;
 @property (nonatomic) NSUInteger filterIndex;
 
 @property (nonatomic) CGFloat topScrollViewInitialContentOffsetY;
-@property (weak, nonatomic) IBOutlet UILabel *tutorialLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *firstTutorialImage;
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
+
+@property (nonatomic) float firstBlendStartY;
+@property (nonatomic) float secondBlendStartY;
+
+@property (weak, nonatomic) IBOutlet UISlider *imageBorderSlider;
+@property (weak, nonatomic) IBOutlet UISlider *secondImageExposureSlider;
+@property (weak, nonatomic) IBOutlet UISlider *firstImageExposureSlider;
+
+@property (weak, nonatomic) IBOutlet UIButton *firstFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *secondFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *thirdFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *fourthFilterButton;
+
+@property (nonatomic) BOOL editionMode;
+
 
 @end
 
@@ -69,9 +77,31 @@
     
     [self setUpFilters];
     
-    self.tutorialIndex = 0;
-    self.exposureLevel = 0;
-    self.filterIndex = 0;
+    self.editionMode = NO;
+    
+    [self.firstFilterButton.layer setCornerRadius:5.0];
+    [self.secondFilterButton.layer setCornerRadius:5.0];
+    [self.thirdFilterButton.layer setCornerRadius:5.0];
+    [self.fourthFilterButton.layer setCornerRadius:5.0];
+    
+    [self.tutorialInstructionContainer.layer setCornerRadius:10.0];
+    
+    [self setFilterButtonBorder:self.firstFilterButton];
+    
+    self.firstBlendStartY = 0.5;
+    self.secondBlendStartY = 0.5;
+    
+    [self.imageBorderSlider setMinimumValue:0.0];
+    [self.imageBorderSlider setMaximumValue:1.0];
+    [self.imageBorderSlider setValue:0.5];
+    
+    [self.firstImageExposureSlider setMinimumValue:-2.0];
+    [self.firstImageExposureSlider setMaximumValue:2.0];
+    [self.firstImageExposureSlider setValue:0.0];
+    
+    [self.secondImageExposureSlider setMinimumValue:-2.0];
+    [self.secondImageExposureSlider setMaximumValue:2.0];
+    [self.secondImageExposureSlider setValue:0.0];
     
     self.topImageView.image = self.firstPersonImage;
     self.bottomImageView.image = self.secondPersonImage;
@@ -87,23 +117,6 @@
     [self centerScrollView:self.topScrollView];
     [self centerScrollView:self.bottomScrollView];
     
-    self.topScrollViewInitialContentOffsetY = self.topScrollView.contentOffset.y;
-
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    if (![userDefaults objectForKey:@"ADJUST FACE TUTO PREF"]) {
-        self.tutorialView.hidden = NO;
-        self.firstTutorialTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                         target:self
-                                       selector:@selector(zoomAnimationOnFace)
-                                       userInfo:nil
-                                        repeats:YES];
-    } else {
-        self.tutorialView.hidden = YES;
-    }
-    
-    [userDefaults setObject:@"dummy" forKey:@"ADJUST FACE TUTO PREF"];
-    
     [self firstBlend];
 }
 
@@ -113,6 +126,28 @@
     
     self.topImageView.bounds = CGRectMake(0, 0, self.topScrollView.bounds.size.width, self.topScrollView.bounds.size.height);
     self.bottomImageView.bounds = CGRectMake(0, 0, self.bottomImageView.bounds.size.width, self.bottomImageView.bounds.size.height);
+    
+    self.topScrollViewInitialContentOffsetY = self.topScrollView.contentOffset.y;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![userDefaults objectForKey:@"ADJUST FACE TUTO PREF"]) {
+        self.tutorialView.hidden = NO;
+        self.editButton.hidden = YES;
+        self.validateButton.hidden = YES;
+        self.backButton.hidden = YES;
+        self.flipButton.hidden = YES;
+        
+        self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                              target:self
+                                                            selector:@selector(zoomAnimationOnFace)
+                                                            userInfo:nil
+                                                             repeats:YES];
+    } else {
+        self.tutorialView.hidden = YES;
+    }
+    
+    [userDefaults setObject:@"dummy" forKey:@"ADJUST FACE TUTO PREF"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -138,12 +173,10 @@
 
 - (void)zoomAnimationOnFace
 {
-    if (self.topScrollView.contentOffset.y == self.topScrollViewInitialContentOffsetY) {
-        [self.topScrollView setZoomScale:1.0 animated:YES];
+    if (self.topScrollView.zoomScale < 1.3) {
+        [self.topScrollView setZoomScale:1.3 animated:YES];
     } else {
         [self.topScrollView setZoomScale:1.1 animated:YES];
-        
-        [self.topScrollView setContentOffset:CGPointMake(self.topScrollView.contentOffset.x, self.topScrollViewInitialContentOffsetY) animated:YES];
     }
 }
 
@@ -151,8 +184,8 @@
 {
     self.backButton.hidden = YES;
     self.validateButton.hidden = YES;
-    self.filterButton.hidden = YES;
-    self.inverseButton.hidden = YES;
+    self.editButton.hidden = YES;
+    self.flipButton.hidden = YES;
     self.logo.hidden = NO;
     
     UIGraphicsBeginImageContext(self.view.bounds.size);
@@ -171,8 +204,8 @@
     
     self.backButton.hidden = NO;
     self.validateButton.hidden = NO;
-    self.filterButton.hidden = NO;
-    self.inverseButton.hidden = NO;
+    self.editButton.hidden = NO;
+    self.flipButton.hidden = NO;
     self.logo.hidden = YES;
     
     return [[NSArray alloc] initWithObjects:image1, image2, nil];
@@ -194,14 +227,16 @@
 
 - (void)firstBlend
 {
+    self.imageBorderSlider.value = self.firstBlendStartY;
+    
     self.blendIndex = 0;
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.topImageView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], nil];
     
-    gradient.startPoint = CGPointMake(0.5, 0.45f);
-    gradient.endPoint = CGPointMake(0.5f, 0.5f);
+    gradient.startPoint = CGPointMake(0.5, self.imageBorderSlider.value);
+    gradient.endPoint = CGPointMake(0.5f, self.imageBorderSlider.value + 0.05f);
     
     self.topImageView.layer.mask = gradient;
     
@@ -213,14 +248,16 @@
 
 - (void)secondBlend
 {
+    self.imageBorderSlider.value = self.secondBlendStartY;
+    
     self.blendIndex = 1;
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.topImageView.bounds;
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:1] CGColor], (id)[[UIColor colorWithRed:0 green:0 blue:0 alpha:0] CGColor], nil];
     
-    gradient.startPoint = CGPointMake(0.5, 0.45f);
-    gradient.endPoint = CGPointMake(0.5f, 0.5f);
+    gradient.startPoint = CGPointMake(0.5, self.imageBorderSlider.value);
+    gradient.endPoint = CGPointMake(0.5f, self.imageBorderSlider.value + 0.05f);
     
     self.bottomImageView.layer.mask = gradient;
     self.topImageView.layer.mask = nil;
@@ -235,6 +272,10 @@
 }
 
 - (IBAction)validateButtonClicked:(id)sender {
+    if (self.editionMode) {
+        [self editButtonClicked:nil];
+    }
+    
     NSArray *blends = [self getBlends];
     [self saveBlends:blends];
     
@@ -254,11 +295,7 @@
 }
 
 - (IBAction)inverseButtonClicked:(id)sender {
-    if (self.blendIndex == 0) {
-        [self secondBlend];
-    } else {
-        [self firstBlend];
-    }
+    [self toggleBlend];
     
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotationAnimation.toValue = @(M_PI);
@@ -266,7 +303,7 @@
     rotationAnimation.autoreverses = NO;
     rotationAnimation.repeatCount = 0;
     rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [self.inverseButton.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+    [self.flipButton.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
@@ -284,36 +321,25 @@
 - (void)updateImagesFilters
 {
     if (self.filterIndex == 1) {
-        self.topImageView.image = [self vintageFilter:[self exposureFilter:self.firstPersonImage value:self.exposureLevel]];
-        self.bottomImageView.image = [self vintageFilter:[self exposureFilter:self.secondPersonImage value:-self.exposureLevel]];
+        self.topImageView.image = [self vintageFilter:[self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value]];
+        self.bottomImageView.image = [self vintageFilter:[self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value]];
         self.firstPersonImageView.image = self.topImageView.image;
         self.secondPersonImageView.image = self.bottomImageView.image;
     } else if (self.filterIndex == 2) {
-        self.topImageView.image = [self washedOutFilter:[self exposureFilter:self.firstPersonImage value:self.exposureLevel]];
-        self.bottomImageView.image = [self washedOutFilter:[self exposureFilter:self.secondPersonImage value:-self.exposureLevel]];        self.firstPersonImageView.image = self.topImageView.image;
+        self.topImageView.image = [self washedOutFilter:[self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value]];
+        self.bottomImageView.image = [self washedOutFilter:[self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value]];        self.firstPersonImageView.image = self.topImageView.image;
         self.secondPersonImageView.image = self.bottomImageView.image;
     } else if (self.filterIndex == 3) {
-        self.topImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.firstPersonImage value:self.exposureLevel]];
-        self.bottomImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.secondPersonImage value:-self.exposureLevel]];
+        self.topImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value]];
+        self.bottomImageView.image = [self blackAndWhiteFilter:[self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value]];
         self.firstPersonImageView.image = self.topImageView.image;
         self.secondPersonImageView.image = self.bottomImageView.image;
     } else {
-        self.topImageView.image = [self exposureFilter:self.firstPersonImage value:self.exposureLevel];
-        self.bottomImageView.image = [self exposureFilter:self.secondPersonImage value:-self.exposureLevel];
+        self.topImageView.image = [self exposureFilter:self.firstPersonImage value:self.firstImageExposureSlider.value];
+        self.bottomImageView.image = [self exposureFilter:self.secondPersonImage value:self.secondImageExposureSlider.value];
         self.firstPersonImageView.image = self.topImageView.image;
         self.secondPersonImageView.image = self.bottomImageView.image;
     }
-}
-
-- (IBAction)plusExpositionButtonClicked:(id)sender {
-    self.exposureLevel = self.exposureLevel + EXPOSURE_UNIT;
-    [self updateImagesFilters];
-}
-
-- (IBAction)minusExpositionButtonClicked:(id)sender {
-    self.exposureLevel = self.exposureLevel - EXPOSURE_UNIT;
-    [self updateImagesFilters];
-
 }
 
 - (void)setUpFilters
@@ -325,14 +351,63 @@
     self.grayFilter = [[GPUImageGrayscaleFilter alloc] init];
 }
 
-- (IBAction)changeFilter:(id)sender {
-    if (self.filterIndex < 3) {
-        self.filterIndex = self.filterIndex + 1;
+- (IBAction)editButtonClicked:(id)sender {
+    if (self.editionMode) {
+        self.editionMode = NO;
+        
+        self.firstPersonImageView.frame = CGRectMake(self.firstPersonImageView.frame.size.width * 2,
+                                                     self.firstPersonImageView.frame.origin.y ,
+                                                     self.firstPersonImageView.frame.size.width,
+                                                     self.firstPersonImageView.frame.size.height);
+        
+        self.secondPersonImageView.frame = CGRectMake(self.firstPersonImageView.frame.size.width * 3,
+                                                      self.secondPersonImageView.frame.origin.y ,
+                                                      self.secondPersonImageView.frame.size.width,
+                                                      self.secondPersonImageView.frame.size.height);
+        
+        self.firstPersonImageView.hidden = NO;
+        self.secondPersonImageView.hidden = NO;
+        
+        [UIView animateWithDuration:0.3 animations:^{  // animate the following:
+            
+            self.firstPersonImageView.frame = CGRectMake(0,
+                                                         self.firstPersonImageView.frame.origin.y ,
+                                                         self.firstPersonImageView.frame.size.width,
+                                                         self.firstPersonImageView.frame.size.height);
+            
+            self.secondPersonImageView.frame = CGRectMake(self.firstPersonImageView.frame.size.width,
+                                                          self.secondPersonImageView.frame.origin.y ,
+                                                          self.secondPersonImageView.frame.size.width,
+                                                          self.secondPersonImageView.frame.size.height);
+        }];
     } else {
-        self.filterIndex = 0;
+        self.editionMode = YES;
+        
+        self.firstPersonImageView.frame = CGRectMake(0,
+                                                     self.firstPersonImageView.frame.origin.y ,
+                                                     self.firstPersonImageView.frame.size.width,
+                                                     self.firstPersonImageView.frame.size.height);
+        
+        self.secondPersonImageView.frame = CGRectMake(self.firstPersonImageView.frame.size.width,
+                                                      self.secondPersonImageView.frame.origin.y ,
+                                                      self.secondPersonImageView.frame.size.width,
+                                                      self.secondPersonImageView.frame.size.height);
+        
+        [UIView animateWithDuration:0.3 animations:^{  // animate the following:
+            self.firstPersonImageView.frame = CGRectMake(self.firstPersonImageView.frame.size.width * 2,
+                                                         self.firstPersonImageView.frame.origin.y ,
+                                                         self.firstPersonImageView.frame.size.width,
+                                                         self.firstPersonImageView.frame.size.height);
+            
+            self.secondPersonImageView.frame = CGRectMake(self.firstPersonImageView.frame.size.width * 3,
+                                                          self.secondPersonImageView.frame.origin.y ,
+                                                          self.secondPersonImageView.frame.size.width,
+                                                          self.secondPersonImageView.frame.size.height);
+        } completion:^(BOOL b){
+            self.firstPersonImageView.hidden = YES;
+            self.secondPersonImageView.hidden = YES;
+        }];
     }
-    
-    [self updateImagesFilters];
 }
 
 - (UIImage *)exposureFilter:(UIImage *)image value:(float)value
@@ -381,48 +456,78 @@
 }
 
 - (IBAction)tutorialViewClicked:(id)sender {
-    
-    if (self.tutorialIndex == 0) {
-        self.tutorialIndex = 1;
-        [self.firstTutorialTimer invalidate];
-        
-        [self.topScrollView setZoomScale:1.1 animated:NO];
-        
-        [self centerScrollView:self.topScrollView];
-        
-        self.firstTutorialTimer = nil;
-        
-        self.firstTutorialImage.hidden = YES;
-        
-        [self.view insertSubview:self.inverseButton aboveSubview:self.tutorialView];
-        
-        self.secondTutorialTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                                   target:self
-                                                                 selector:@selector(inverseButtonClicked:)
-                                                                 userInfo:nil
-                                                                  repeats:YES];
-        
-        self.tutorialLabel.text = @"...inverse faces...";
-    } else if (self.tutorialIndex == 1) {
-        self.tutorialIndex = 2;
-        [self.secondTutorialTimer invalidate];
-        [self firstBlend];
-        
-        [self.view insertSubview:self.tutorialView aboveSubview:self.inverseButton];
-        [self.view insertSubview:self.filterButton aboveSubview:self.tutorialView];
-        
-        self.tutorialLabel.text = @"...apply filters...";
-    } else if (self.tutorialIndex == 2) {
-        self.tutorialIndex = 3;
-        
-        [self.view insertSubview:self.tutorialView aboveSubview:self.filterButton];
-        [self.view insertSubview:self.validateButton aboveSubview:self.tutorialView];
-        
-        self.tutorialLabel.text = @"...and save!";
+    //Consume event
+}
 
+- (IBAction)dismissTutorialClicked:(id)sender {
+    self.tutorialView.hidden = YES;
+    self.editButton.hidden = NO;
+    self.validateButton.hidden = NO;
+    self.backButton.hidden = NO;
+    self.flipButton.hidden = NO;
+    
+    [self.tutorialTimer invalidate];
+    
+    [self.topScrollView setZoomScale:1.1 animated:NO];
+    
+    [self centerScrollView:self.topScrollView];
+}
+
+
+- (IBAction)secondImageExposureSliderChanged:(id)sender {
+    [self updateImagesFilters];
+}
+- (IBAction)firstImageExposureSliderChanged:(id)sender {
+    [self updateImagesFilters];
+}
+
+- (IBAction)imageBorderSliderChanged:(id)sender {
+    if (self.blendIndex == 0) {
+        self.firstBlendStartY = self.imageBorderSlider.value;
+        [self firstBlend];
     } else {
-        self.tutorialView.hidden = YES;
+        self.secondBlendStartY = self.imageBorderSlider.value;
+        [self secondBlend];
     }
+}
+
+- (IBAction)fistFilterClicked:(id)sender {
+    [self setFilterButtonBorder:self.firstFilterButton];
+    
+    self.filterIndex = 0;
+    [self updateImagesFilters];
+}
+
+- (IBAction)secondFilterClicked:(id)sender {
+    [self setFilterButtonBorder:self.secondFilterButton];
+    
+    self.filterIndex = 1;
+    [self updateImagesFilters];
+}
+
+- (IBAction)thirdFilterClicked:(id)sender {
+    [self setFilterButtonBorder:self.thirdFilterButton];
+    
+    self.filterIndex = 2;
+    [self updateImagesFilters];
+}
+
+- (IBAction)fourthFilterClicked:(id)sender {
+    [self setFilterButtonBorder:self.fourthFilterButton];
+    
+    self.filterIndex = 3;
+    [self updateImagesFilters];
+}
+
+- (void)setFilterButtonBorder:(UIButton *)button
+{
+    [self.firstFilterButton.layer setBorderColor:0];
+    [self.secondFilterButton.layer setBorderColor:0];
+    [self.thirdFilterButton.layer setBorderColor:0];
+    [self.fourthFilterButton.layer setBorderColor:0];
+    
+    [button.layer setBorderWidth:2.0];
+    [button.layer setBorderColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0].CGColor];
 }
 
 @end

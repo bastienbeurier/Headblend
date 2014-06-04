@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *captureButton;
 @property (weak, nonatomic) IBOutlet UIImageView *faceTemplate;
+@property (weak, nonatomic) IBOutlet UIButton *flipButton;
+@property (weak, nonatomic) IBOutlet UIButton *libraryButton;
 
 @end
 
@@ -37,6 +39,9 @@
     [self allocAndInitFullScreenCamera];
     
     self.pictureIndex = 0;
+    
+    [ImageUtilities outerGlow:self.flipButton];
+    [ImageUtilities outerGlow:self.libraryButton];
     
     self.topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -181,18 +186,26 @@
     
     if (self.pictureIndex == 0) {
         [self.imagePickerController.cameraOverlayView insertSubview:self.topImageView atIndex:1];
-        if (self.view.frame.size.height == 568) {
+        if (self.view.frame.size.height == 568 && picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             self.topImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
         } else {
-            self.topImageView.image = [ImageUtilities resizeImage:image];
+            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                self.topImageView.image = [ImageUtilities resizeImage:[UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:orientation]];
+            } else {
+                self.topImageView.image = [ImageUtilities resizeImage:image];
+            }
         }
         
         [self secondPictureMode];
     } else {
-        if (self.view.frame.size.height == 568) {
+        if (self.view.frame.size.height == 568 && picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             self.bottomImageView.image = [ImageUtilities resizeImage:[ImageUtilities cropImage:image toFitWidthOnHeightTargetRatio:targetRatio andOrientate:orientation]];
         } else {
-            self.bottomImageView.image = [ImageUtilities resizeImage:image];
+            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                self.bottomImageView.image = [ImageUtilities resizeImage:[UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:orientation]];
+            } else {
+                self.bottomImageView.image = [ImageUtilities resizeImage:image];
+            }
         }
         
         [self closeCamera];
@@ -274,6 +287,18 @@
         
         self.libraryController = nil;
     }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return UIInterfaceOrientationIsPortrait(toInterfaceOrientation);
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationPortrait;
 }
 
 @end
