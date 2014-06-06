@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="I8z-s5-PnN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="9Ab-fp-PCt">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Camera View Controller-->
         <scene sceneID="fW0-Sw-JiN">
             <objects>
-                <viewController id="I8z-s5-PnN" customClass="CameraViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraViewController" id="I8z-s5-PnN" customClass="CameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6VP-Gf-b2i"/>
                         <viewControllerLayoutGuide type="bottom" id="14t-75-xgV"/>
@@ -17,6 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hO7-7J-IWN"/>
                     <connections>
                         <segue destination="dNM-za-Duf" kind="modal" identifier="Share Modal Segue" animates="NO" id="zrb-RI-zQm"/>
                     </connections>
@@ -381,6 +382,70 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="666" y="-8"/>
+        </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="7Ku-Za-qg6">
+            <objects>
+                <viewController id="9Ab-fp-PCt" customClass="TutorialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3sc-d6-mmz"/>
+                        <viewControllerLayoutGuide type="bottom" id="bYP-ds-Ugr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FYT-Pf-Ei3">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ER5-Rh-Fsv">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="Wua-XW-Nv8">
+                                <rect key="frame" x="364" y="977" width="40" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="Ips-Jy-Orh"/>
+                                    <constraint firstAttribute="height" constant="37" id="PjF-Kq-OQX"/>
+                                </constraints>
+                            </pageControl>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXx-Wp-ffg">
+                                <rect key="frame" x="708" y="10" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Y1Q-n3-Fqz"/>
+                                    <constraint firstAttribute="width" constant="50" id="d06-7d-YLT"/>
+                                </constraints>
+                                <state key="normal" image="camera-quit.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="quitButtonClicked:" destination="9Ab-fp-PCt" eventType="touchUpInside" id="PeS-76-pVV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ER5-Rh-Fsv" secondAttribute="trailing" id="Hqm-Jq-haN"/>
+                            <constraint firstItem="ER5-Rh-Fsv" firstAttribute="leading" secondItem="FYT-Pf-Ei3" secondAttribute="leading" id="KFl-Gv-YHp"/>
+                            <constraint firstAttribute="centerX" secondItem="Wua-XW-Nv8" secondAttribute="centerX" id="KTr-KH-pem"/>
+                            <constraint firstItem="ER5-Rh-Fsv" firstAttribute="top" secondItem="3sc-d6-mmz" secondAttribute="bottom" id="dTi-XA-eiM"/>
+                            <constraint firstItem="bYP-ds-Ugr" firstAttribute="top" secondItem="ER5-Rh-Fsv" secondAttribute="bottom" id="j1V-U5-WcV"/>
+                            <constraint firstAttribute="trailing" secondItem="RXx-Wp-ffg" secondAttribute="trailing" constant="10" id="n06-HC-Cic"/>
+                            <constraint firstItem="bYP-ds-Ugr" firstAttribute="top" secondItem="Wua-XW-Nv8" secondAttribute="bottom" constant="10" id="pc8-hR-a3m"/>
+                            <constraint firstItem="RXx-Wp-ffg" firstAttribute="top" secondItem="3sc-d6-mmz" secondAttribute="bottom" constant="10" id="u0A-Cr-Lzr"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="pageControl" destination="Wua-XW-Nv8" id="C78-ms-11y"/>
+                        <outlet property="quitButton" destination="RXx-Wp-ffg" id="lJ5-V8-fJ2"/>
+                        <outlet property="scrollView" destination="ER5-Rh-Fsv" id="ATI-1G-9Nb"/>
+                        <segue destination="I8z-s5-PnN" kind="modal" identifier="Camera Modal Segue" modalPresentationStyle="fullScreen" animates="NO" id="SNK-C8-22d"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GAD-cx-hzP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1480" y="-18"/>
         </scene>
     </scenes>
     <resources>

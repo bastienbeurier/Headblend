@@ -8,12 +8,32 @@
 
 #import "MainAppDelegate.h"
 #import "DisplayViewController.h"
+#import "CameraViewController.h"
 
 @implementation MainAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([userDefaults objectForKey:@"INITIAL TUTO PREF"]) {
+        self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+        
+        UIStoryboard *storyboard;
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            storyboard = [UIStoryboard storyboardWithName:@"Main_ipad" bundle:nil];
+        } else {
+            storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        }
+        
+        
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraViewController"];
+        
+        self.window.rootViewController = viewController;
+        [self.window makeKeyAndVisible];
+    }
+    
     return YES;
 }
 							

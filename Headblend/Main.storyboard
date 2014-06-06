@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Kso-gX-6LX">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Camera View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="CameraViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraViewController" id="vXZ-lx-hvc" customClass="CameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="56i-Db-Tjr"/>
                         <viewControllerLayoutGuide type="bottom" id="Rg0-1o-I54"/>
@@ -17,6 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="uUG-Dx-k5K"/>
                     <connections>
                         <segue destination="LzV-33-4sA" kind="modal" identifier="Share Modal Segue" animates="NO" id="nRS-iT-rES"/>
                     </connections>
@@ -24,6 +25,70 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="157" y="-8"/>
+        </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="osd-Vm-vL7">
+            <objects>
+                <viewController id="Kso-gX-6LX" customClass="TutorialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JAh-Xr-kqR"/>
+                        <viewControllerLayoutGuide type="bottom" id="bGP-dV-fW8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tki-kQ-hPy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTR-Oj-sNE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="5XU-ej-OvD">
+                                <rect key="frame" x="140" y="521" width="40" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="87i-KQ-GeB"/>
+                                    <constraint firstAttribute="height" constant="37" id="wlu-PI-sAs"/>
+                                </constraints>
+                            </pageControl>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18s-Yy-tqQ">
+                                <rect key="frame" x="260" y="10" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="e34-Zc-wsE"/>
+                                    <constraint firstAttribute="width" constant="50" id="mTA-KK-PXK"/>
+                                </constraints>
+                                <state key="normal" image="camera-quit.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="quitButtonClicked:" destination="Kso-gX-6LX" eventType="touchUpInside" id="fSi-WB-O7i"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bGP-dV-fW8" firstAttribute="top" secondItem="XTR-Oj-sNE" secondAttribute="bottom" id="7Kx-dW-pyc"/>
+                            <constraint firstItem="18s-Yy-tqQ" firstAttribute="top" secondItem="JAh-Xr-kqR" secondAttribute="bottom" constant="10" id="H6n-FZ-kPJ"/>
+                            <constraint firstAttribute="trailing" secondItem="18s-Yy-tqQ" secondAttribute="trailing" constant="10" id="K5j-z1-ayC"/>
+                            <constraint firstItem="XTR-Oj-sNE" firstAttribute="top" secondItem="JAh-Xr-kqR" secondAttribute="bottom" id="P8m-oo-HTR"/>
+                            <constraint firstItem="XTR-Oj-sNE" firstAttribute="leading" secondItem="Tki-kQ-hPy" secondAttribute="leading" id="PFs-NL-lPH"/>
+                            <constraint firstItem="bGP-dV-fW8" firstAttribute="top" secondItem="5XU-ej-OvD" secondAttribute="bottom" constant="10" id="kHc-9b-aNC"/>
+                            <constraint firstAttribute="trailing" secondItem="XTR-Oj-sNE" secondAttribute="trailing" id="lyF-Cs-EdY"/>
+                            <constraint firstAttribute="centerX" secondItem="5XU-ej-OvD" secondAttribute="centerX" id="miG-rx-6w2"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="pageControl" destination="5XU-ej-OvD" id="L3j-Ua-xvR"/>
+                        <outlet property="quitButton" destination="18s-Yy-tqQ" id="dmE-dn-HCj"/>
+                        <outlet property="scrollView" destination="XTR-Oj-sNE" id="NpS-ZS-hR0"/>
+                        <segue destination="vXZ-lx-hvc" kind="modal" identifier="Camera Modal Segue" animates="NO" id="RLe-ml-NbE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mro-QM-jdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-346" y="29"/>
         </scene>
         <!--Display View Controller-->
         <scene sceneID="rhh-7p-f8L">
