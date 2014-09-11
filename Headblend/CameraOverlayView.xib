@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -11,6 +11,8 @@
                 <outlet property="captureButton" destination="OwL-xe-4Bp" id="UFl-qy-ShE"/>
                 <outlet property="faceTemplate" destination="53q-0d-WSs" id="XHR-kM-N4T"/>
                 <outlet property="flipButton" destination="LF2-mt-e5c" id="EdY-hl-VnP"/>
+                <outlet property="instructionContainer" destination="bsl-kU-tVS" id="hbK-X4-XEs"/>
+                <outlet property="instructionTitle" destination="8uF-tC-qBE" id="oVg-ni-14p"/>
                 <outlet property="libraryButton" destination="ch3-WO-FoA" id="1UE-Ki-Q4O"/>
             </connections>
         </placeholder>
@@ -33,9 +35,13 @@
                         <action selector="takePictureButtonClicked:" destination="-1" eventType="touchUpInside" id="IEF-ta-MRN"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClI-KY-iiZ">
-                    <rect key="frame" x="10" y="10" width="50" height="50"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClI-KY-iiZ">
+                    <rect key="frame" x="20" y="483" width="50" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="N4I-5r-Wp2"/>
+                        <constraint firstAttribute="height" constant="50" id="bV7-Fv-2R7"/>
+                    </constraints>
                     <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                     <state key="normal" backgroundImage="camera-quit.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,7 +50,7 @@
                         <action selector="cancelButtonClicked:" destination="-1" eventType="touchUpInside" id="ZXm-VN-Ugg"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera-face1.png" translatesAutoresizingMaskIntoConstraints="NO" id="53q-0d-WSs">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera-face.png" translatesAutoresizingMaskIntoConstraints="NO" id="53q-0d-WSs">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -62,13 +68,9 @@
                         <action selector="flipButtonClicked:" destination="-1" eventType="touchUpInside" id="Naf-Os-2LV"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch3-WO-FoA">
-                    <rect key="frame" x="20" y="483" width="50" height="50"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch3-WO-FoA">
+                    <rect key="frame" x="260" y="10" width="50" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="oZJ-yO-T0v"/>
-                        <constraint firstAttribute="height" constant="50" id="rlf-BN-QHD"/>
-                    </constraints>
                     <state key="normal" image="camera-library.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -76,27 +78,67 @@
                         <action selector="chooseLibraryImage:" destination="-1" eventType="touchUpInside" id="3oK-f6-nwN"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsl-kU-tVS">
+                    <rect key="frame" x="20" y="20" width="280" height="80"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take 1st person's selfie." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uF-tC-qBE">
+                            <rect key="frame" x="0.0" y="11" width="280" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="zvZ-ka-nKE"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(carefully align eyes in marks)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMv-9n-9wW">
+                            <rect key="frame" x="0.0" y="43" width="280" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="ybM-Df-Sq6"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="8uF-tC-qBE" firstAttribute="top" secondItem="bsl-kU-tVS" secondAttribute="top" constant="11" id="0M6-56-glr"/>
+                        <constraint firstAttribute="trailing" secondItem="8uF-tC-qBE" secondAttribute="trailing" id="5LP-sd-x5b"/>
+                        <constraint firstItem="8uF-tC-qBE" firstAttribute="leading" secondItem="bsl-kU-tVS" secondAttribute="leading" id="LjL-F7-OnQ"/>
+                        <constraint firstItem="KMv-9n-9wW" firstAttribute="leading" secondItem="bsl-kU-tVS" secondAttribute="leading" id="RNw-FA-IN0"/>
+                        <constraint firstAttribute="trailing" secondItem="KMv-9n-9wW" secondAttribute="trailing" id="nxc-Ik-nMo"/>
+                        <constraint firstItem="KMv-9n-9wW" firstAttribute="top" secondItem="8uF-tC-qBE" secondAttribute="bottom" constant="2" id="sav-w2-PQ2"/>
+                        <constraint firstAttribute="height" constant="80" id="x33-tm-fuM"/>
+                    </constraints>
+                </view>
             </subviews>
             <gestureRecognizers/>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="bsl-kU-tVS" secondAttribute="centerX" id="0dA-TC-XJr"/>
                 <constraint firstItem="53q-0d-WSs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="GZR-cV-z9T"/>
                 <constraint firstAttribute="bottom" secondItem="53q-0d-WSs" secondAttribute="bottom" id="J7v-RZ-BMl"/>
                 <constraint firstAttribute="centerX" secondItem="OwL-xe-4Bp" secondAttribute="centerX" id="MNK-KG-Ma3"/>
-                <constraint firstAttribute="bottom" secondItem="ch3-WO-FoA" secondAttribute="bottom" constant="35" id="Pv9-RF-gNp"/>
+                <constraint firstAttribute="bottom" secondItem="ClI-KY-iiZ" secondAttribute="bottom" constant="35" id="OBa-E6-IOM"/>
+                <constraint firstItem="ClI-KY-iiZ" firstAttribute="centerY" secondItem="OwL-xe-4Bp" secondAttribute="centerY" id="RQD-vp-fIl"/>
                 <constraint firstItem="OwL-xe-4Bp" firstAttribute="centerY" secondItem="LF2-mt-e5c" secondAttribute="centerY" id="TK3-dB-AC3"/>
-                <constraint firstItem="ch3-WO-FoA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="V0l-2N-q07"/>
                 <constraint firstAttribute="bottom" secondItem="LF2-mt-e5c" secondAttribute="bottom" constant="35" id="asR-C5-hhm"/>
+                <constraint firstItem="ClI-KY-iiZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="bGW-dK-KSb"/>
                 <constraint firstAttribute="bottom" secondItem="OwL-xe-4Bp" secondAttribute="bottom" constant="10" id="d87-Q0-u9S"/>
                 <constraint firstAttribute="trailing" secondItem="53q-0d-WSs" secondAttribute="trailing" id="eNi-CM-jJg"/>
+                <constraint firstAttribute="trailing" secondItem="bsl-kU-tVS" secondAttribute="trailing" constant="20" id="f1g-LJ-TQi"/>
                 <constraint firstItem="53q-0d-WSs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gSP-26-dIK"/>
-                <constraint firstItem="ch3-WO-FoA" firstAttribute="centerY" secondItem="OwL-xe-4Bp" secondAttribute="centerY" id="uhX-9D-V2V"/>
+                <constraint firstItem="bsl-kU-tVS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="nIb-vd-Ril"/>
+                <constraint firstItem="bsl-kU-tVS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="ujc-jT-9hd"/>
                 <constraint firstAttribute="trailing" secondItem="LF2-mt-e5c" secondAttribute="trailing" constant="20" id="ySE-Sa-btS"/>
             </constraints>
         </view>
     </objects>
     <resources>
         <image name="camera-capture.png" width="150" height="150"/>
-        <image name="camera-face1.png" width="495" height="495"/>
+        <image name="camera-face.png" width="488" height="488"/>
         <image name="camera-flip.png" width="124" height="124"/>
         <image name="camera-library.png" width="124" height="124"/>
         <image name="camera-quit.png" width="100" height="100"/>

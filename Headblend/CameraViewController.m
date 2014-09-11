@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *faceTemplate;
 @property (weak, nonatomic) IBOutlet UIButton *flipButton;
 @property (weak, nonatomic) IBOutlet UIButton *libraryButton;
+@property (weak, nonatomic) IBOutlet UIView *instructionContainer;
+@property (weak, nonatomic) IBOutlet UILabel *instructionTitle;
 
 @end
 
@@ -34,6 +36,10 @@
 {
     [super viewDidLoad];
     
+    self.instructionContainer.alpha = 0;
+    
+    self.instructionTitle.adjustsFontSizeToFitWidth = YES;
+    
     self.sourceType = UIImagePickerControllerSourceTypeCamera;
     
 	// Init and present full screen camera
@@ -43,6 +49,8 @@
     
     [ImageUtilities outerGlow:self.flipButton];
     [ImageUtilities outerGlow:self.libraryButton];
+    
+    self.instructionContainer.layer.cornerRadius = 10;
     
     self.topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.bottomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
@@ -81,17 +89,19 @@
     self.backButton.hidden = YES;
     self.captureButton.hidden = NO;
     
-    self.faceTemplate.image = [UIImage imageNamed:@"camera-face1"];
-    
     self.topImageView.image = nil;
     self.bottomImageView.image = nil;
     
-    [ImageUtilities hideBottomHalf:self.topImageView offset:0];
-    [ImageUtilities hideTopHalf:self.bottomImageView offset:0];
-    
-    self.bottomImageView.backgroundColor = [UIColor blackColor];
+    self.topImageView.alpha = 1;
     
     self.imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    
+    self.instructionContainer.alpha = 0;
+    
+    [UIView animateWithDuration:2 animations:^(void) {
+        self.instructionTitle.text = @"Take 1st person's selfie.";
+        self.instructionContainer.alpha = 1;
+    }];
 }
 
 - (void)secondPictureMode
@@ -101,13 +111,17 @@
     self.backButton.hidden = NO;
     self.captureButton.hidden = NO;
     
-    self.faceTemplate.image = [UIImage imageNamed:@"camera-face2"];
-    
     self.bottomImageView.image = nil;
-    [ImageUtilities hideBottomHalf:self.topImageView offset:0];
-    [ImageUtilities hideTopHalf:self.bottomImageView offset:0];
     
-    self.bottomImageView.backgroundColor = [UIColor clearColor];
+//    self.topImageView.alpha = 0;
+    [ImageUtilities hideTopHalf:self.topImageView offset:0];
+    
+    self.instructionContainer.alpha = 0;
+    
+    [UIView animateWithDuration:2 animations:^(void) {
+        self.instructionTitle.text = @"Now take 2nd person's selfie!";
+        self.instructionContainer.alpha = 1;
+    }];
 }
 
 // ----------------------------------------------------------

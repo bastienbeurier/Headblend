@@ -58,6 +58,9 @@
 @property (nonatomic) BOOL editionMode;
 @property (weak, nonatomic) IBOutlet UILabel *waterMark;
 
+@property (weak, nonatomic) IBOutlet UIView *wavedBanner;
+@property (weak, nonatomic) IBOutlet UIButton *wavedBannerDismiss;
+
 @end
 
 @implementation DisplayViewController
@@ -117,10 +120,31 @@
     self.topScrollView.zoomScale = 1.1;
     self.bottomScrollView.zoomScale = 1.1;
     
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    if ([prefs objectForKey:@"Waved Banner Clicked"]) {
+        self.wavedBanner.hidden = YES;
+        self.wavedBannerDismiss.hidden = YES;
+    }
+    
     [self centerScrollView:self.topScrollView];
     [self centerScrollView:self.bottomScrollView];
     
     [self firstBlend];
+}
+- (IBAction)bannerClicked:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.waved.io"]];
+    
+    self.wavedBanner.hidden = YES;
+    self.wavedBannerDismiss.hidden = YES;
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:@"dummy" forKey:@"Waved Banner Clicked"];
+}
+
+- (IBAction)buttonClicked:(id)sender {
+    self.wavedBanner.hidden = YES;
+    self.wavedBannerDismiss.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -282,7 +306,7 @@
     NSString *shareString = @"Download Selflip.";
     
     //TODO: add App Store link
-    NSURL *shareUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/selflip/id%d?mt=8", APP_ID]];
+    NSURL *shareUrl = [NSURL URLWithString:@"http://www.selflip.me"];
     
     NSArray *activityItems = [NSArray arrayWithObjects:shareString, shareUrl, [blends objectAtIndex:0], [blends objectAtIndex:1], nil];
     
