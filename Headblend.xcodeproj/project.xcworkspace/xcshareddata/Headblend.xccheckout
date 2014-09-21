@@ -10,29 +10,29 @@
 	<string>Headblend</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</key>
+		<key>1BFC95CEC6BA102B1E29C9EC8F3405057E03C28F</key>
 		<string>ssh://github.com/bastienbeurier/Headblend.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Headblend.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</key>
+		<key>1BFC95CEC6BA102B1E29C9EC8F3405057E03C28F</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/bastienbeurier/Headblend.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</string>
+	<string>1BFC95CEC6BA102B1E29C9EC8F3405057E03C28F</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>DA660B21-A83D-42D6-A3C4-F04C4BE02D02</string>
+			<string>1BFC95CEC6BA102B1E29C9EC8F3405057E03C28F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Headblend</string>
 		</dict>

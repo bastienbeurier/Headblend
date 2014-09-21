@@ -82,6 +82,10 @@
     
     self.editionMode = NO;
     
+    self.wavedBanner.clipsToBounds = YES;
+    self.wavedBanner.layer.cornerRadius = 10;
+    self.editButton.hidden = YES;
+    
     [self.firstFilterButton.layer setCornerRadius:5.0];
     [self.secondFilterButton.layer setCornerRadius:5.0];
     [self.thirdFilterButton.layer setCornerRadius:5.0];
@@ -161,6 +165,8 @@
     if (![userDefaults objectForKey:@"ADJUST FACE TUTO PREF"]) {
         self.tutorialView.hidden = NO;
         self.editButton.hidden = YES;
+        self.wavedBanner.hidden = YES;
+        self.wavedBannerDismiss.hidden = YES;
         self.validateButton.hidden = YES;
         self.backButton.hidden = YES;
         self.flipButton.hidden = YES;
@@ -203,6 +209,8 @@
     self.backButton.hidden = YES;
     self.validateButton.hidden = YES;
     self.editButton.hidden = YES;
+    self.wavedBanner.hidden = YES;
+    self.wavedBannerDismiss.hidden = YES;
     self.flipButton.hidden = YES;
     self.logo.hidden = NO;
     
@@ -226,9 +234,16 @@
     
     self.backButton.hidden = NO;
     self.validateButton.hidden = NO;
-    self.editButton.hidden = NO;
+    self.editButton.hidden = YES;
     self.flipButton.hidden = NO;
     self.logo.hidden = YES;
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    if (![prefs objectForKey:@"Waved Banner Clicked"]) {
+        self.wavedBanner.hidden = NO;
+        self.wavedBannerDismiss.hidden = NO;
+    }
     
     self.waterMark.hidden = YES;
     
@@ -511,10 +526,17 @@
 
 - (IBAction)dismissTutorialClicked:(id)sender {
     self.tutorialView.hidden = YES;
-    self.editButton.hidden = NO;
+    self.editButton.hidden = YES;
     self.validateButton.hidden = NO;
     self.backButton.hidden = NO;
     self.flipButton.hidden = NO;
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    if (![prefs objectForKey:@"Waved Banner Clicked"]) {
+        self.wavedBanner.hidden = NO;
+        self.wavedBannerDismiss.hidden = NO;
+    }
     
     [self.tutorialTimer invalidate];
     
