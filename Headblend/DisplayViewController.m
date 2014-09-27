@@ -84,7 +84,7 @@
     
     self.wavedBanner.clipsToBounds = YES;
     self.wavedBanner.layer.cornerRadius = 10;
-    self.editButton.hidden = YES;
+    self.editButton.hidden = NO;
     
     [self.firstFilterButton.layer setCornerRadius:5.0];
     [self.secondFilterButton.layer setCornerRadius:5.0];
@@ -234,7 +234,7 @@
     
     self.backButton.hidden = NO;
     self.validateButton.hidden = NO;
-    self.editButton.hidden = YES;
+    self.editButton.hidden = NO;
     self.flipButton.hidden = NO;
     self.logo.hidden = YES;
     
@@ -526,7 +526,7 @@
 
 - (IBAction)dismissTutorialClicked:(id)sender {
     self.tutorialView.hidden = YES;
-    self.editButton.hidden = YES;
+    self.editButton.hidden = NO;
     self.validateButton.hidden = NO;
     self.backButton.hidden = NO;
     self.flipButton.hidden = NO;
